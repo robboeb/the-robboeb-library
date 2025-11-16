@@ -1,5 +1,5 @@
 <?php
-define('APP_NAME', 'ROBBOEB Libra');
+define('APP_NAME', 'THE ROBBOEB LIBRARY');
 define('APP_VERSION', '1.0.0');
 define('BASE_URL', '/library-pro');
 define('API_BASE_URL', BASE_URL . '/api');

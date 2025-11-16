@@ -107,8 +107,8 @@ $stats = [
         <div class="container">
             <div class="nav-content">
                 <div class="nav-brand">
-                    <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="ROBBOEB Libra" class="brand-logo">
-                    <span>ROBBOEB Libra</span>
+                    <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="THE ROBBOEB LIBRARY" class="brand-logo">
+                    <span>THE ROBBOEB LIBRARY</span>
                 </div>
                 <div class="nav-links">
                     <a href="<?php echo BASE_URL; ?>/public/home.php" class="nav-link">
@@ -317,8 +317,8 @@ $stats = [
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>
-                        <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="ROBBOEB Libra" class="brand-logo-footer">
-                        ROBBOEB Libra
+                        <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="THE ROBBOEB LIBRARY" class="brand-logo-footer">
+                        THE ROBBOEB LIBRARY
                     </h3>
                     <p>Your trusted library management system for modern reading experiences.</p>
                 </div>
@@ -340,7 +340,7 @@ $stats = [
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 ROBBOEB Libra. All rights reserved.</p>
+                <p>&copy; 2025 THE ROBBOEB LIBRARY. All rights reserved.</p>
             </div>
         </div>
     </footer>

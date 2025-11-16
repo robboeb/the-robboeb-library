@@ -19,8 +19,8 @@ $stats = DatabaseHelper::getDashboardStats();
         <div class="container">
             <div class="nav-content">
                 <div class="nav-brand">
-                    <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="ROBBOEB Libra" class="brand-logo">
-                    <span>ROBBOEB Library</span>
+                    <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="THE ROBBOEB LIBRARY" class="brand-logo">
+                    <span>THE ROBBOEB LIBRARY</span>
                 </div>
                 <div class="nav-links">
                     <a href="<?php echo BASE_URL; ?>/public/home.php" class="nav-link">

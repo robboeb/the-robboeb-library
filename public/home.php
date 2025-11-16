@@ -11,7 +11,7 @@ $stats = DatabaseHelper::getDashboardStats();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROBBOEB Libra - Library Management System</title>
+    <title>THE ROBBOEB LIBRARY - Library Management System</title>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -21,8 +21,8 @@ $stats = DatabaseHelper::getDashboardStats();
         <div class="container">
             <div class="nav-content">
                 <div class="nav-brand">
-                    <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="ROBBOEB Libra" class="brand-logo">
-                    <span>ROBBOEB Library</span>
+                    <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="THE ROBBOEB LIBRARY" class="brand-logo">
+                    <span>THE ROBBOEB LIBRARY</span>
                 </div>
                 <div class="nav-links">
                     <a href="<?php echo BASE_URL; ?>/public/home.php" class="nav-link active">
@@ -50,7 +50,7 @@ $stats = DatabaseHelper::getDashboardStats();
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1>Welcome to ROBBOEB Libra</h1>
+                    <h1>Welcome to THE ROBBOEB LIBRARY</h1>
                     <p>Discover thousands of books and manage your reading journey with our modern library management system.</p>
                     <div class="hero-actions">
                         <a href="<?php echo BASE_URL; ?>/public/browse.php" class="btn btn-primary btn-lg">
@@ -71,7 +71,7 @@ $stats = DatabaseHelper::getDashboardStats();
     <!-- Features Section -->
     <section class="features">
         <div class="container">
-            <h2 class="section-title">Why Choose ROBBOEB Libra?</h2>
+            <h2 class="section-title">Why Choose THE ROBBOEB LIBRARY?</h2>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
@@ -172,8 +172,8 @@ $stats = DatabaseHelper::getDashboardStats();
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>
-                        <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="ROBBOEB Libra" class="brand-logo-footer">
-                        ROBBOEB Libra
+                        <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="THE ROBBOEB LIBRARY" class="brand-logo-footer">
+                        THE ROBBOEB LIBRARY
                     </h3>
                     <p>Your trusted library management system for modern reading experiences.</p>
                 </div>
@@ -196,7 +196,7 @@ $stats = DatabaseHelper::getDashboardStats();
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 ROBBOEB Libra. All rights reserved.</p>
+                <p>&copy; 2025 THE ROBBOEB LIBRARY. All rights reserved.</p>
             </div>
         </div>
     </footer>

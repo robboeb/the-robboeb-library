@@ -1,8 +1,8 @@
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
         <div class="sidebar-brand">
-            <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="ROBBOEB Libra" class="brand-logo">
-            <span>ROBBOEB Libra</span>
+            <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="THE ROBBOEB LIBRARY" class="brand-logo">
+            <span>THE ROBBOEB LIBRARY</span>
         </div>
     </div>
     <div style="text-align: center; padding: 10px;">

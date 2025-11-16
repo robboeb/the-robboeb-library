@@ -47,15 +47,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // CREATE or UPDATE operation
         else {
             $book_id = $_POST['book_id'] ?? null;
-            $title = $_POST['title'];
-            $isbn = $_POST['isbn'];
-            $category_id = $_POST['category_id'];
-            $author_id = $_POST['author_id'];
+            $title = $_POST['title'] ?? '';
+            $isbn = $_POST['isbn'] ?? '';
+            $category_id = $_POST['category_id'] ?? null;
+            $author_id = $_POST['author_id'] ?? null;
             $publication_year = $_POST['publication_year'] ?? null;
             $description = $_POST['description'] ?? '';
             $publisher = $_POST['publisher'] ?? '';
-            $total_quantity = $_POST['total_quantity'];
-            $available_quantity = $_POST['available_quantity'];
+            $total_quantity = $_POST['total_quantity'] ?? 1;
+            $available_quantity = $_POST['available_quantity'] ?? 1;
             $cover_image = $_POST['cover_image'] ?? '';
             $pdf_file = $_POST['pdf_file'] ?? '';
             
@@ -118,8 +118,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 // Update author
                 $pdo->prepare("DELETE FROM book_authors WHERE book_id = :book_id")->execute([':book_id' => $book_id]);
-                $pdo->prepare("INSERT INTO book_authors (book_id, author_id) VALUES (:book_id, :author_id)")
-                    ->execute([':book_id' => $book_id, ':author_id' => $author_id]);
+                if ($author_id) {
+                    $pdo->prepare("INSERT INTO book_authors (book_id, author_id) VALUES (:book_id, :author_id)")
+                        ->execute([':book_id' => $book_id, ':author_id' => $author_id]);
+                }
                 
                 $message = 'Book updated successfully';
             } else {
@@ -145,8 +147,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $book_id = $pdo->lastInsertId();
                 
                 // Link author
-                $pdo->prepare("INSERT INTO book_authors (book_id, author_id) VALUES (:book_id, :author_id)")
-                    ->execute([':book_id' => $book_id, ':author_id' => $author_id]);
+                if ($author_id) {
+                    $pdo->prepare("INSERT INTO book_authors (book_id, author_id) VALUES (:book_id, :author_id)")
+                        ->execute([':book_id' => $book_id, ':author_id' => $author_id]);
+                }
                 
                 $message = 'Book created successfully';
             }
@@ -394,7 +398,7 @@ $stats = DatabaseHelper::getDashboardStats();
                 </button>
             </div>
             <form id="bookForm" method="POST" enctype="multipart/form-data" class="modal-body">
-                <input type="hidden" id="bookId">
+                <input type="hidden" id="bookId" name="book_id">
                 
                 <div class="form-section">
                     <h3 class="form-section-title">Basic Information</h3>
@@ -403,22 +407,22 @@ $stats = DatabaseHelper::getDashboardStats();
                             <label class="form-label">
                                 <i class="fas fa-book"></i> Title *
                             </label>
-                            <input type="text" id="title" class="form-control" required placeholder="Enter book title">
+                            <input type="text" id="title" name="title" class="form-control" required placeholder="Enter book title">
                         </div>
                         <div class="form-group">
                             <label class="form-label">
                                 <i class="fas fa-barcode"></i> ISBN *
                             </label>
-                            <input type="text" id="isbn" class="form-control" required placeholder="978-0-123456-78-9">
+                            <input type="text" id="isbn" name="isbn" class="form-control" required placeholder="978-0-123456-78-9">
                         </div>
                     </div>
                     
                     <div class="form-grid">
                         <div class="form-group">
                             <label class="form-label">
-                                <i class="fas fa-user"></i> Author *
+                                <i class="fas fa-user"></i> Author
                             </label>
-                            <select id="authorId" class="form-control" required>
+                            <select id="authorId" name="author_id" class="form-control">
                                 <option value="">Select Author</option>
                                 <?php foreach ($authors as $author): ?>
                                     <option value="<?php echo $author['author_id']; ?>">
@@ -431,7 +435,7 @@ $stats = DatabaseHelper::getDashboardStats();
                             <label class="form-label">
                                 <i class="fas fa-tag"></i> Category *
                             </label>
-                            <select id="categoryId" class="form-control" required>
+                            <select id="categoryId" name="category_id" class="form-control" required>
                                 <option value="">Select Category</option>
                                 <?php foreach ($categories as $category): ?>
                                     <option value="<?php echo $category['category_id']; ?>">
@@ -450,13 +454,13 @@ $stats = DatabaseHelper::getDashboardStats();
                             <label class="form-label">
                                 <i class="fas fa-building"></i> Publisher
                             </label>
-                            <input type="text" id="publisher" class="form-control" placeholder="Publisher name">
+                            <input type="text" id="publisher" name="publisher" class="form-control" placeholder="Publisher name">
                         </div>
                         <div class="form-group">
                             <label class="form-label">
                                 <i class="fas fa-calendar"></i> Publication Year
                             </label>
-                            <input type="number" id="publicationYear" class="form-control" min="1000" max="2100" placeholder="2024">
+                            <input type="number" id="publicationYear" name="publication_year" class="form-control" min="1000" max="2100" placeholder="2024">
                         </div>
                     </div>
                 </div>
@@ -464,7 +468,7 @@ $stats = DatabaseHelper::getDashboardStats();
                 <div class="form-section">
                     <h3 class="form-section-title">Description</h3>
                     <div class="form-group">
-                        <textarea id="description" class="form-control" rows="4" placeholder="Enter book description..."></textarea>
+                        <textarea id="description" name="description" class="form-control" rows="4" placeholder="Enter book description..."></textarea>
                     </div>
                 </div>
                 
@@ -475,13 +479,13 @@ $stats = DatabaseHelper::getDashboardStats();
                             <label class="form-label">
                                 <i class="fas fa-boxes"></i> Total Copies *
                             </label>
-                            <input type="number" id="totalCopies" class="form-control" min="1" required value="1">
+                            <input type="number" id="totalCopies" name="total_quantity" class="form-control" min="1" required value="1">
                         </div>
                         <div class="form-group">
                             <label class="form-label">
                                 <i class="fas fa-check-circle"></i> Available Copies *
                             </label>
-                            <input type="number" id="availableCopies" class="form-control" min="0" required value="1">
+                            <input type="number" id="availableCopies" name="available_quantity" class="form-control" min="0" required value="1">
                         </div>
                     </div>
                 </div>
@@ -492,14 +496,14 @@ $stats = DatabaseHelper::getDashboardStats();
                         <label class="form-label">
                             <i class="fas fa-link"></i> Cover Image URL
                         </label>
-                        <input type="url" id="coverImage" class="form-control" placeholder="https://example.com/cover.jpg">
+                        <input type="url" id="coverImage" name="cover_image" class="form-control" placeholder="https://example.com/cover.jpg">
                         <small class="form-text">Or upload an image file below</small>
                     </div>
                     <div class="form-group">
                         <label class="form-label">
                             <i class="fas fa-upload"></i> Upload Cover Image
                         </label>
-                        <input type="file" id="coverImageFile" class="form-control" accept="image/*">
+                        <input type="file" id="coverImageFile" name="cover_image_file" class="form-control" accept="image/*">
                         <small class="form-text">Supported: JPG, PNG, GIF (Max 5MB)</small>
                     </div>
                     <div id="coverPreview" class="image-preview" style="display: none;">
@@ -513,14 +517,14 @@ $stats = DatabaseHelper::getDashboardStats();
                         <label class="form-label">
                             <i class="fas fa-link"></i> PDF File URL
                         </label>
-                        <input type="url" id="pdfFile" class="form-control" placeholder="https://example.com/book.pdf">
+                        <input type="url" id="pdfFile" name="pdf_file" class="form-control" placeholder="https://example.com/book.pdf">
                         <small class="form-text">Or upload a PDF file below</small>
                     </div>
                     <div class="form-group">
                         <label class="form-label">
                             <i class="fas fa-file-pdf"></i> Upload PDF File
                         </label>
-                        <input type="file" id="pdfFileUpload" class="form-control" accept=".pdf">
+                        <input type="file" id="pdfFileUpload" name="pdf_file_upload" class="form-control" accept=".pdf">
                         <small class="form-text">Supported: PDF only (Max 50MB)</small>
                     </div>
                     <div id="pdfPreview" class="file-preview" style="display: none;">

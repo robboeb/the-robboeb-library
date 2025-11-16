@@ -18,7 +18,7 @@ if (AuthService::isAuthenticated()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - ROBBOEB Libra</title>
+    <title>Login - THE ROBBOEB LIBRARY</title>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -26,9 +26,9 @@ if (AuthService::isAuthenticated()) {
     <div class="login-container">
         <div class="login-box">
             <div class="login-logo">
-                <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="ROBBOEB Libra" class="brand-logo-large">
+                <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="THE ROBBOEB LIBRARY" class="brand-logo-large">
             </div>
-            <h1>ROBBOEB Libra</h1>
+            <h1>THE ROBBOEB LIBRARY</h1>
             <h2>Library Management System</h2>
             
             <div id="message" class="message" style="display:none;"></div>

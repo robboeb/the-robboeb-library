@@ -26,15 +26,19 @@ $recent_activity = DatabaseHelper::getRecentActivity(5);
         
         <main class="main-content">
             <header class="top-bar">
-                <h1>Dashboard</h1>
-                <div class="user-info">
-                       <div class="user-details">
+                <div class="top-bar-left">
+                    <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+                </div>
+                <div class="top-bar-right">
+                    <div class="user-info">
+                        <div class="user-avatar"><?php echo strtoupper(substr($currentUser['first_name'], 0, 1)); ?></div>
+                        <div class="user-details">
                             <span class="user-name"><?php echo htmlspecialchars($currentUser['first_name'] . ' ' . $currentUser['last_name']); ?></span>
                             <span class="user-role">Administrator</span>
                         </div>
-                  
+                    </div>
                     <button onclick="logout()" class="btn btn-logout">
-                        <i class="fas fa-sign-out-alt"></i> Logout
+                        <i class="fas fa-sign-out-alt"></i>
                     </button>
                 </div>
             </header>

@@ -103,14 +103,19 @@ $currentUser = AuthService::getCurrentUser();
         let items = [];
         
         async function loadData() {
+            const tbody = document.getElementById('tableBody');
             try {
-                const response = await API.categories.getAll({});
+                const response = await API.categories.getAll();
+                console.log('Categories response:', response);
                 if (response.success) {
                     items = response.data;
                     displayData();
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" class="empty-cell" style="color: red;">Error: ' + (response.error?.message || 'Failed to load') + '</td></tr>';
                 }
             } catch (error) {
-                UIComponents.showToast('Failed to load categories', 'error');
+                console.error('Error loading categories:', error);
+                tbody.innerHTML = '<tr><td colspan="4" class="empty-cell" style="color: red;">Error: ' + (error.error?.message || error.message || 'Failed to load categories') + '</td></tr>';
             }
         }
         

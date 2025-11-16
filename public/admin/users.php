@@ -21,11 +21,19 @@ $currentUser = AuthService::getCurrentUser();
         
         <main class="main-content">
             <header class="top-bar">
-                <h1><i class="fas fa-users"></i> Users Management</h1>
-                <div class="user-info">
-                    <span><?php echo htmlspecialchars($currentUser['first_name'] . ' ' . $currentUser['last_name']); ?></span>
+                <div class="top-bar-left">
+                    <h1><i class="fas fa-users"></i> Users Management</h1>
+                </div>
+                <div class="top-bar-right">
+                    <div class="user-info">
+                        <div class="user-avatar"><?php echo strtoupper(substr($currentUser['first_name'], 0, 1)); ?></div>
+                        <div class="user-details">
+                            <span class="user-name"><?php echo htmlspecialchars($currentUser['first_name'] . ' ' . $currentUser['last_name']); ?></span>
+                            <span class="user-role">Administrator</span>
+                        </div>
+                    </div>
                     <button onclick="logout()" class="btn btn-logout">
-                        <i class="fas fa-sign-out-alt"></i> Logout
+                        <i class="fas fa-sign-out-alt"></i>
                     </button>
                 </div>
             </header>
@@ -36,9 +44,7 @@ $currentUser = AuthService::getCurrentUser();
                         <i class="fas fa-search"></i>
                         <input type="text" id="searchInput" placeholder="Search users by name or email...">
                     </div>
-                    <button onclick="showAddUserModal()" class="btn btn-primary">
-                        <i class="fas fa-user-plus"></i> Add New User
-                    </button>
+                    <!-- Add New User button hidden for security -->
                 </div>
                 
                 <div class="table-container">

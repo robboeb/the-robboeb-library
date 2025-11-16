@@ -30,7 +30,7 @@ $active_loans = $loan_stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard - ROBBOEB Libra</title>
+    <title>User Dashboard - THE ROBBOEB LIBRARY</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/main.css">
 </head>
@@ -40,8 +40,8 @@ $active_loans = $loan_stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="container">
             <div class="nav-content">
                 <div class="nav-brand">
-                    <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="ROBBOEB Libra" class="brand-logo">
-                    <span>ROBBOEB Library</span>
+                    <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="THE ROBBOEB LIBRARY" class="brand-logo">
+                    <span>THE ROBBOEB LIBRARY</span>
                 </div>
                 <div class="nav-links">
                     <a href="<?php echo BASE_URL; ?>/public/home.php" class="nav-link">
@@ -191,8 +191,8 @@ $active_loans = $loan_stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>
-                        <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="ROBBOEB Libra" class="brand-logo-footer">
-                        ROBBOEB Libra
+                        <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="THE ROBBOEB LIBRARY" class="brand-logo-footer">
+                        THE ROBBOEB LIBRARY
                     </h3>
                     <p>Your trusted library management system for modern reading experiences.</p>
                 </div>
@@ -214,7 +214,7 @@ $active_loans = $loan_stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 ROBBOEB Libra. All rights reserved.</p>
+                <p>&copy; 2025 THE ROBBOEB LIBRARY. All rights reserved.</p>
             </div>
         </div>
     </footer>
