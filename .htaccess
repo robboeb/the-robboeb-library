@@ -1,0 +1,10 @@
+Options -Indexes
+
+<FilesMatch "^(config|logs|src|database)">
+    Require all denied
+</FilesMatch>
+
+RewriteEngine On
+RewriteBase /library-pro/
+
+ErrorDocument 404 /library-pro/public/404.php
