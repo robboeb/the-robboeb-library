@@ -2,7 +2,17 @@
 require_once __DIR__ . '/../src/services/AuthService.php';
 require_once __DIR__ . '/../config/constants.php';
 
+// Check if user was logged out
+$loggedOut = isset($_GET['logout']) && $_GET['logout'] == '1';
+
+// Ensure session is destroyed if logout parameter is present
+if ($loggedOut) {
+    AuthService::destroySession();
+}
+
 AuthService::initSession();
+
+// Redirect if already authenticated
 if (AuthService::isAuthenticated()) {
     $userType = $_SESSION['user_type'];
     if ($userType === 'admin') {
@@ -33,6 +43,12 @@ if (AuthService::isAuthenticated()) {
             
             <div id="message" class="message" style="display:none;"></div>
             
+            <?php if ($loggedOut): ?>
+            <div class="message success" style="display:block; margin-bottom: 20px;">
+                <i class="fas fa-check-circle"></i> You have been logged out successfully
+            </div>
+            <?php endif; ?>
+            
             <div style="text-align: center; margin-bottom: 30px;">
                 <h3 style="color: var(--gray-700); font-size: 18px; font-weight: 600;">
                     <i class="fas fa-sign-in-alt"></i> Sign In to Your Account
@@ -59,12 +75,6 @@ if (AuthService::isAuthenticated()) {
                     <i class="fas fa-sign-in-alt"></i> Login
                 </button>
             </form>
-            
-            <div class="demo-credentials">
-                <p><strong><i class="fas fa-info-circle"></i> Demo Credentials:</strong></p>
-                <p><i class="fas fa-user-shield"></i> Admin: admin@library.com / password</p>
-                <p><i class="fas fa-user"></i> User: john.doe@email.com / password</p>
-            </div>
             
             <div style="text-align: center; margin-top: var(--space-4);">
                 <a href="<?php echo BASE_URL; ?>/public/home.php" class="btn btn-outline" style="width: 100%;">

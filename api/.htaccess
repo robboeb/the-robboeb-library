@@ -1,5 +1,8 @@
 RewriteEngine On
 
+# Route /api/auth/logout
+RewriteRule ^auth/logout/?$ auth/logout.php [L]
+
 # Route /api/loans to index.php
 RewriteRule ^loans/?$ loans/index.php [L]
 

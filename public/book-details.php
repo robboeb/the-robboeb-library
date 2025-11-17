@@ -69,102 +69,129 @@ if (!$book) {
     </nav>
 
     <!-- Book Details -->
-    <section class="book-details-section">
-        <div class="container">
-            <a href="<?php echo BASE_URL; ?>/public/browse.php" class="back-link">
+    <section style="min-height: calc(100vh - 80px); background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; display: flex; align-items: center;">
+        <div class="container" style="max-width: 1400px;">
+            <a href="<?php echo BASE_URL; ?>/public/browse.php" style="display: inline-flex; align-items: center; gap: 8px; color: white; text-decoration: none; font-weight: 600; margin-bottom: 30px; padding: 10px 20px; background: rgba(255,255,255,0.2); border-radius: 8px; backdrop-filter: blur(10px);">
                 <i class="fas fa-arrow-left"></i> Back to Browse
             </a>
 
-            <div class="book-details-grid">
-                <div class="book-cover-large">
-                    <?php if (!empty($book['cover_image'])): ?>
-                        <img src="<?php echo htmlspecialchars($book['cover_image']); ?>" 
-                             alt="<?php echo htmlspecialchars($book['title']); ?>"
-                             class="book-cover-image"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="book-cover-placeholder" style="display: none;">
-                            <i class="fas fa-book"></i>
-                            <span class="book-title-overlay"><?php echo htmlspecialchars($book['title']); ?></span>
-                        </div>
-                    <?php else: ?>
-                        <div class="book-cover-placeholder">
-                            <i class="fas fa-book"></i>
-                            <span class="book-title-overlay"><?php echo htmlspecialchars($book['title']); ?></span>
-                        </div>
-                    <?php endif; ?>
-                </div>
-
-                <div class="book-details-content">
-                    <h1 class="book-title"><?php echo htmlspecialchars($book['title']); ?></h1>
-                    
-                    <div class="book-meta">
-                        <div class="meta-item">
-                            <i class="fas fa-user"></i>
-                            <span><strong>Author:</strong> <?php echo htmlspecialchars($book['authors'] ?: 'Unknown Author'); ?></span>
-                        </div>
-                        <div class="meta-item">
-                            <i class="fas fa-tag"></i>
-                            <span><strong>Category:</strong> <?php echo htmlspecialchars($book['category_name'] ?: 'Uncategorized'); ?></span>
-                        </div>
-                        <div class="meta-item">
-                            <i class="fas fa-barcode"></i>
-                            <span><strong>ISBN:</strong> <?php echo htmlspecialchars($book['isbn'] ?: 'N/A'); ?></span>
-                        </div>
-                        <div class="meta-item">
-                            <i class="fas fa-calendar"></i>
-                            <span><strong>Published:</strong> <?php echo htmlspecialchars($book['publication_year'] ?: 'N/A'); ?></span>
-                        </div>
-                    </div>
-
-                    <?php if (!empty($book['description'])): ?>
-                        <div class="book-description">
-                            <h2><i class="fas fa-align-left"></i> Description</h2>
-                            <p><?php echo nl2br(htmlspecialchars($book['description'])); ?></p>
-                        </div>
-                    <?php endif; ?>
-
-                    <div class="book-availability">
-                        <h2><i class="fas fa-info-circle"></i> Availability</h2>
-                        <div class="availability-info">
-                            <div class="availability-item">
-                                <span class="label">Status:</span>
-                                <?php if ($book['status'] === 'available'): ?>
-                                    <span class="badge badge-success">
-                                        <i class="fas fa-check-circle"></i> Available
-                                    </span>
-                                <?php else: ?>
-                                    <span class="badge badge-danger">
-                                        <i class="fas fa-times-circle"></i> Not Available
-                                    </span>
-                                <?php endif; ?>
+            <div style="background: white; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden;">
+                <div style="display: grid; grid-template-columns: 400px 1fr; min-height: 600px;">
+                    <!-- Book Cover Section -->
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <?php if (!empty($book['cover_image'])): ?>
+                            <img src="<?php echo htmlspecialchars($book['cover_image']); ?>" 
+                                 alt="<?php echo htmlspecialchars($book['title']); ?>"
+                                 style="width: 100%; max-width: 320px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.3);"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div style="display: none; width: 100%; max-width: 320px; aspect-ratio: 2/3; background: rgba(255,255,255,0.2); border-radius: 16px; backdrop-filter: blur(10px); flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 30px;">
+                                <i class="fas fa-book" style="font-size: 80px; margin-bottom: 20px; opacity: 0.8;"></i>
+                                <span style="font-size: 18px; font-weight: 600;"><?php echo htmlspecialchars($book['title']); ?></span>
                             </div>
-                            <div class="availability-item">
-                                <span class="label">Total Copies:</span>
-                                <span class="value"><?php echo $book['total_quantity']; ?></span>
-                            </div>
-                            <div class="availability-item">
-                                <span class="label">Available Copies:</span>
-                                <span class="value"><?php echo $book['available_quantity']; ?></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="book-actions">
-                        <?php if ($book['status'] === 'available'): ?>
-                            <?php if ($isAuthenticated): ?>
-                                <button class="btn btn-primary btn-lg" onclick="borrowBook(<?php echo $book['book_id']; ?>)">
-                                    <i class="fas fa-book-reader"></i> Borrow This Book
-                                </button>
-                            <?php else: ?>
-                                <a href="<?php echo BASE_URL; ?>/public/login.php" class="btn btn-primary btn-lg">
-                                    <i class="fas fa-sign-in-alt"></i> Login to Borrow
-                                </a>
-                            <?php endif; ?>
                         <?php else: ?>
-                            <button class="btn btn-secondary btn-lg" disabled>
-                                <i class="fas fa-times-circle"></i> Currently Unavailable
-                            </button>
+                            <div style="width: 100%; max-width: 320px; aspect-ratio: 2/3; background: rgba(255,255,255,0.2); border-radius: 16px; backdrop-filter: blur(10px); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 30px;">
+                                <i class="fas fa-book" style="font-size: 80px; margin-bottom: 20px; opacity: 0.8;"></i>
+                                <span style="font-size: 18px; font-weight: 600;"><?php echo htmlspecialchars($book['title']); ?></span>
+                            </div>
                         <?php endif; ?>
+                        
+                        <!-- Availability Badges -->
+                        <div style="margin-top: 30px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+                            <?php if ($book['status'] === 'available'): ?>
+                                <div style="background: rgba(16, 185, 129, 0.2); backdrop-filter: blur(10px); padding: 12px 24px; border-radius: 30px; color: white; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                    <i class="fas fa-check-circle"></i> <?php echo $book['available_quantity']; ?> Available
+                                </div>
+                            <?php else: ?>
+                                <div style="background: rgba(239, 68, 68, 0.2); backdrop-filter: blur(10px); padding: 12px 24px; border-radius: 30px; color: white; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                    <i class="fas fa-times-circle"></i> Not Available
+                                </div>
+                            <?php endif; ?>
+                            <div style="background: rgba(59, 130, 246, 0.2); backdrop-filter: blur(10px); padding: 12px 24px; border-radius: 30px; color: white; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                <i class="fas fa-calendar"></i> 14 Days Loan
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Book Information Section -->
+                    <div style="padding: 50px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <h1 style="font-size: 36px; font-weight: 700; color: #1f2937; margin: 0 0 20px 0; line-height: 1.2;">
+                                <?php echo htmlspecialchars($book['title']); ?>
+                            </h1>
+                            
+                            <!-- Meta Information Grid -->
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 30px;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 48px; height: 48px; background: #eff6ff; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #3b82f6;">
+                                        <i class="fas fa-user" style="font-size: 20px;"></i>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 12px; color: #6b7280; font-weight: 600; text-transform: uppercase;">Author</div>
+                                        <div style="font-size: 16px; color: #1f2937; font-weight: 600;"><?php echo htmlspecialchars($book['authors'] ?: 'Unknown'); ?></div>
+                                    </div>
+                                </div>
+                                
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 48px; height: 48px; background: #fef3c7; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #f59e0b;">
+                                        <i class="fas fa-tag" style="font-size: 20px;"></i>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 12px; color: #6b7280; font-weight: 600; text-transform: uppercase;">Category</div>
+                                        <div style="font-size: 16px; color: #1f2937; font-weight: 600;"><?php echo htmlspecialchars($book['category_name'] ?: 'Uncategorized'); ?></div>
+                                    </div>
+                                </div>
+                                
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 48px; height: 48px; background: #f3e8ff; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #a855f7;">
+                                        <i class="fas fa-barcode" style="font-size: 20px;"></i>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 12px; color: #6b7280; font-weight: 600; text-transform: uppercase;">ISBN</div>
+                                        <div style="font-size: 16px; color: #1f2937; font-weight: 600;"><?php echo htmlspecialchars($book['isbn'] ?: 'N/A'); ?></div>
+                                    </div>
+                                </div>
+                                
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 48px; height: 48px; background: #dcfce7; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #10b981;">
+                                        <i class="fas fa-calendar" style="font-size: 20px;"></i>
+                                    </div>
+                                    <div>
+                                        <div style="font-size: 12px; color: #6b7280; font-weight: 600; text-transform: uppercase;">Published</div>
+                                        <div style="font-size: 16px; color: #1f2937; font-weight: 600;"><?php echo htmlspecialchars($book['publication_year'] ?: 'N/A'); ?></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <?php if (!empty($book['description'])): ?>
+                                <div style="margin-bottom: 30px;">
+                                    <h2 style="font-size: 18px; font-weight: 700; color: #1f2937; margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px;">
+                                        <i class="fas fa-align-left" style="color: #667eea;"></i> Description
+                                    </h2>
+                                    <p style="color: #4b5563; line-height: 1.7; margin: 0; font-size: 15px;">
+                                        <?php echo nl2br(htmlspecialchars($book['description'])); ?>
+                                    </p>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Action Button -->
+                        <div>
+                            <?php if ($book['status'] === 'available'): ?>
+                                <?php if ($isAuthenticated): ?>
+                                    <button onclick="borrowBook(<?php echo $book['book_id']; ?>)" style="width: 100%; padding: 18px 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 30px rgba(102, 126, 234, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                                        <i class="fas fa-book-reader"></i> Borrow This Book
+                                    </button>
+                                <?php else: ?>
+                                    <a href="<?php echo BASE_URL; ?>/public/login.php" style="width: 100%; padding: 18px 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 30px rgba(102, 126, 234, 0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                                        <i class="fas fa-sign-in-alt"></i> Login to Borrow
+                                    </a>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <button disabled style="width: 100%; padding: 18px 32px; background: #e5e7eb; color: #9ca3af; border: none; border-radius: 12px; font-size: 18px; font-weight: 700; cursor: not-allowed; display: flex; align-items: center; justify-content: center; gap: 12px;">
+                                    <i class="fas fa-times-circle"></i> Currently Unavailable
+                                </button>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>

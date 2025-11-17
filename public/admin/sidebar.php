@@ -39,56 +39,90 @@
         </a>
     </nav>
     <div class="sidebar-footer">
-        <!-- User Profile -->
-        <div class="sidebar-user-footer">
-            <div class="user-avatar-small">
-                <?php echo strtoupper(substr($currentUser['first_name'], 0, 1)); ?>
-            </div>
-            <div class="user-info-footer">
-                <div class="user-name-footer"><?php echo htmlspecialchars($currentUser['first_name'] . ' ' . $currentUser['last_name']); ?></div>
-                <div class="user-role-footer">Administrator</div>
-            </div>
-        </div>
-        
         <a href="<?php echo BASE_URL; ?>/public/home.php" class="nav-item">
             <i class="fas fa-home"></i>
             <span>Public Site</span>
         </a>
-        <a href="#" onclick="logout(); return false;" class="nav-item logout-item">
+        <button type="button" onclick="handleLogout(event)" class="nav-item logout-item" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer; font-family: inherit; font-size: inherit;">
             <i class="fas fa-sign-out-alt"></i>
             <span>Logout</span>
-        </a>
+        </button>
     </div>
 </aside>
 
 <script>
-function logout() {
-    if (confirm('Are you sure you want to logout?')) {
-        // Show loading state
-        const logoutBtn = document.querySelector('.logout-item');
-        if (logoutBtn) {
-            logoutBtn.style.opacity = '0.6';
-            logoutBtn.style.pointerEvents = 'none';
-        }
-        
-        // Call logout API
-        fetch('<?php echo BASE_URL; ?>/api/auth/logout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'same-origin'
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Redirect to homepage
-            window.location.href = '<?php echo BASE_URL; ?>/public/home.php';
-        })
-        .catch(error => {
-            console.error('Logout error:', error);
-            // Redirect anyway to ensure logout
-            window.location.href = '<?php echo BASE_URL; ?>/public/home.php';
-        });
+function handleLogout(event) {
+    // Prevent any default behavior
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
     }
+    
+    // Show confirmation dialog
+    if (confirm('Are you sure you want to logout?\n\nYou will need to login again to access the admin panel.')) {
+        performLogout();
+    }
+}
+
+function performLogout() {
+    // Show loading state
+    const logoutBtn = document.querySelector('.logout-item');
+    if (logoutBtn) {
+        logoutBtn.style.opacity = '0.6';
+        logoutBtn.style.pointerEvents = 'none';
+        logoutBtn.disabled = true;
+        logoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Logging out...</span>';
+    }
+    
+    console.log('Starting logout process...');
+    
+    // Call logout API
+    fetch('<?php echo BASE_URL; ?>/api/auth/logout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin',
+        cache: 'no-cache'
+    })
+    .then(response => {
+        console.log('Logout API response status:', response.status);
+        return response.json();
+    })
+    .then(data => {
+        console.log('Logout response data:', data);
+        
+        if (data.success) {
+            console.log('Logout successful, clearing storage...');
+            // Clear any local storage
+            if (typeof(Storage) !== "undefined") {
+                localStorage.clear();
+                sessionStorage.clear();
+            }
+            
+            // Force redirect to login page with cache busting
+            console.log('Redirecting to login page...');
+            setTimeout(() => {
+                window.location.replace('<?php echo BASE_URL; ?>/public/login.php?logout=1&t=' + Date.now());
+            }, 100);
+        } else {
+            throw new Error(data.error?.message || 'Logout failed');
+        }
+    })
+    .catch(error => {
+        console.error('Logout error:', error);
+        // Clear storage and redirect anyway to ensure logout
+        if (typeof(Storage) !== "undefined") {
+            localStorage.clear();
+            sessionStorage.clear();
+        }
+        // Force redirect even on error
+        window.location.replace('<?php echo BASE_URL; ?>/public/login.php?logout=1&t=' + Date.now());
+    });
+}
+
+// Legacy function for compatibility
+function logout() {
+    handleLogout(null);
 }
 </script>

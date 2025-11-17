@@ -197,16 +197,14 @@ $categories = $pdo->query($cat_sql)->fetchAll(PDO::FETCH_ASSOC);
         .modal-content {
             background: #ffffff;
             margin: 0 auto;
-            max-width: 1400px;
+            max-width: 900px;
             width: 100%;
             border-radius: 20px;
             box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
             animation: modalSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             overflow: hidden;
             position: relative;
-            display: grid;
-            grid-template-columns: 450px 1fr;
-            min-height: 650px;
+            min-height: 500px;
         }
         
         .modal-close-btn {
@@ -705,16 +703,6 @@ $categories = $pdo->query($cat_sql)->fetchAll(PDO::FETCH_ASSOC);
             <button class="modal-close-btn" onclick="closeBookDetail()" title="Close (ESC)">
                 <i class="fas fa-times"></i>
             </button>
-            
-            <!-- Left Panel - Book Cover -->
-            <div class="modal-left-panel">
-                <div class="modal-book-cover-container">
-                    <img id="modalBookCover" src="" alt="Book Cover" class="modal-book-cover-large">
-                    <div class="modal-book-badges" id="modalBookBadges">
-                        <!-- Badges will be inserted here -->
-                    </div>
-                </div>
-            </div>
             
             <!-- Right Panel - Book Details -->
             <div class="modal-right-panel">

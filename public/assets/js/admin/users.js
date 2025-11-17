@@ -43,9 +43,11 @@ async function loadUsers() {
         const params = {};
         if (searchQuery) params.q = searchQuery;
         
+        console.log('Loading users with params:', params);
         const response = await API.users.getAll(params);
+        console.log('Users loaded:', response);
         
-        if (response.success && response.data.length > 0) {
+        if (response.success && response.data && response.data.length > 0) {
             tbody.innerHTML = response.data.map(user => `
                 <tr>
                     <td><strong>#${user.user_id}</strong></td>
@@ -64,8 +66,10 @@ async function loadUsers() {
                     </td>
                 </tr>
             `).join('');
+            console.log('Table updated with', response.data.length, 'users');
         } else {
             tbody.innerHTML = '<tr><td colspan="7" class="empty-cell">No users found</td></tr>';
+            console.log('No users to display');
         }
     } catch (error) {
         console.error('Error loading users:', error);
@@ -141,43 +145,81 @@ document.getElementById('userForm').addEventListener('submit', async (e) => {
     
     const submitBtn = e.target.querySelector('button[type="submit"]');
     const originalBtnText = submitBtn.innerHTML;
+    
+    // Get form values
+    const userId = document.getElementById('userId').value;
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const userType = document.getElementById('userType').value;
+    const address = document.getElementById('address').value.trim();
+    const status = document.getElementById('status').value;
+    const password = document.getElementById('password').value;
+    
+    // Validate required fields for new user
+    if (!userId && !password) {
+        showToast('Password is required for new users', 'error');
+        return;
+    }
+    
+    if (!userId && password.length < 8) {
+        showToast('Password must be at least 8 characters', 'error');
+        return;
+    }
+    
+    if (!firstName || !lastName || !email) {
+        showToast('Please fill in all required fields', 'error');
+        return;
+    }
+    
+    // Disable button and show loading
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
     
-    const userId = document.getElementById('userId').value;
     const userData = {
-        first_name: document.getElementById('firstName').value,
-        last_name: document.getElementById('lastName').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        user_type: document.getElementById('userType').value,
-        address: document.getElementById('address').value,
-        status: document.getElementById('status').value
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        phone: phone || null,
+        user_type: userType,
+        address: address || null,
+        status: status
     };
     
-    const password = document.getElementById('password').value;
+    // Add password if provided
     if (password) {
         userData.password = password;
     }
     
+    console.log('Form data:', userData);
+    
     try {
         let response;
         if (userId) {
+            console.log('Updating user:', userId);
             response = await API.users.update(userId, userData);
         } else {
+            console.log('Creating new user');
             response = await API.users.create(userData);
         }
         
-        console.log('User save response:', response);
+        console.log('API response:', response);
         
         if (response.success) {
-            const message = userId ? 'User updated successfully' : 'User created successfully';
+            const message = userId ? 'User updated successfully!' : 'User created successfully!';
             showToast(message, 'success');
+            
+            // Close modal
             closeUserModal();
-            // Reload users after a short delay to ensure database is updated
-            setTimeout(() => {
-                loadUsers();
-            }, 300);
+            
+            // Reset button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnText;
+            
+            // Reload users table
+            console.log('Reloading users...');
+            await loadUsers();
         } else {
             throw new Error(response.error?.message || 'Failed to save user');
         }

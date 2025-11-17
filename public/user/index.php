@@ -48,7 +48,7 @@ foreach ($active_loans as $loan) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Dashboard - KH LIBRARY</title>
+    <title>My Profile - KH LIBRARY</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/main.css">
     <style>
@@ -84,7 +84,7 @@ foreach ($active_loans as $loan) {
                         <i class="fas fa-book"></i> Browse Books
                     </a>
                     <a href="<?php echo BASE_URL; ?>/public/user/index.php" class="nav-link active">
-                        <i class="fas fa-tachometer-alt"></i> My Dashboard
+                        <i class="fas fa-user-circle"></i> My Profile
                     </a>
                     <button onclick="logout()" class="btn btn-outline" style="margin-left: var(--space-2);">
                         <i class="fas fa-sign-out-alt"></i> Logout
@@ -101,13 +101,29 @@ foreach ($active_loans as $loan) {
     <section class="dashboard-section" style="padding: 40px 0; background: #f7fafc;">
         <div class="container" style="max-width: 1200px;">
             
-            <!-- Welcome Header -->
-            <div style="text-align: center; margin-bottom: 40px;">
-                <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: bold; margin: 0 auto 20px;">
-                    <?php echo strtoupper(substr($currentUser['first_name'], 0, 1)); ?>
+            <!-- Profile Header -->
+            <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); margin-bottom: 40px;">
+                <div style="display: flex; align-items: center; gap: 30px; flex-wrap: wrap;">
+                    <div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: bold; flex-shrink: 0;">
+                        <?php echo strtoupper(substr($currentUser['first_name'], 0, 1)); ?>
+                    </div>
+                    <div style="flex: 1; min-width: 250px;">
+                        <h1 style="margin: 0 0 8px 0; font-size: 32px; color: #2d3748;">
+                            <?php echo htmlspecialchars($currentUser['first_name'] . ' ' . $currentUser['last_name']); ?>
+                        </h1>
+                        <p style="color: #718096; font-size: 16px; margin: 0 0 16px 0;">
+                            <i class="fas fa-envelope"></i> <?php echo htmlspecialchars($currentUser['email']); ?>
+                        </p>
+                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #eff6ff; color: #1e40af; border-radius: 20px; font-size: 13px; font-weight: 600;">
+                                <i class="fas fa-user"></i> Member
+                            </span>
+                            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #d1fae5; color: #065f46; border-radius: 20px; font-size: 13px; font-weight: 600;">
+                                <i class="fas fa-check-circle"></i> Active
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <h1 style="margin: 0 0 10px 0; font-size: 32px; color: #2d3748;">Welcome, <?php echo htmlspecialchars($currentUser['first_name']); ?>!</h1>
-                <p style="color: #718096; font-size: 16px; margin: 0;">Manage your borrowed books and discover new titles</p>
             </div>
 
             <!-- Quick Stats -->
