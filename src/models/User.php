@@ -21,8 +21,8 @@ class User extends BaseModel {
     public function authenticate($email, $password) {
         try {
             $user = $this->findByEmail($email);
-            if ($user && password_verify($password, $user['password_hash'])) {
-                unset($user['password_hash']);
+            if ($user && password_verify($password, $user['password'])) {
+                unset($user['password']);
                 return $user;
             }
             return false;
@@ -34,8 +34,7 @@ class User extends BaseModel {
 
     public function create($data) {
         if (isset($data['password'])) {
-            $data['password_hash'] = password_hash($data['password'], PASSWORD_DEFAULT);
-            unset($data['password']);
+            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         }
         return parent::create($data);
     }
@@ -43,9 +42,9 @@ class User extends BaseModel {
     public function updatePassword($userId, $newPassword) {
         try {
             $passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
-            $sql = "UPDATE {$this->table} SET password_hash = :password_hash WHERE user_id = :user_id";
+            $sql = "UPDATE {$this->table} SET password = :password WHERE user_id = :user_id";
             $stmt = $this->db->prepare($sql);
-            $stmt->bindValue(':password_hash', $passwordHash);
+            $stmt->bindValue(':password', $passwordHash);
             $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
             $stmt->execute();
             return ['success' => true];
@@ -93,7 +92,7 @@ class User extends BaseModel {
     public function findById($id) {
         $user = parent::findById($id);
         if ($user) {
-            unset($user['password_hash']);
+            unset($user['password']);
         }
         return $user;
     }
@@ -101,7 +100,7 @@ class User extends BaseModel {
     public function findAll($limit = null, $offset = 0) {
         $users = parent::findAll($limit, $offset);
         foreach ($users as &$user) {
-            unset($user['password_hash']);
+            unset($user['password']);
         }
         return $users;
     }

@@ -1,0 +1,21 @@
+OFFICIAL LOGO:
+https://s3.ca-central-1.amazonaws.com/logojoy/logos/231703335/symbol.svg?1537014.9000000358
+
+This logo is used across all pages of the application.
+
+
+my Color Palette
+
+These are based on your logo colors.
+
+#ff5722
+
+#eeeeee
+
+#111111
+
+#ff7e55
+
+#ee3900
+
+#ffffff 

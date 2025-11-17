@@ -38,7 +38,7 @@ if (!$book) {
         <div class="container">
             <div class="nav-content">
                 <div class="nav-brand">
-                    <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="THE ROBBOEB LIBRARY" class="brand-logo">
+                    <img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/231703335/symbol.svg?1537014.9000000358" alt="THE ROBBOEB LIBRARY" class="brand-logo">
                     <span>THE ROBBOEB LIBRARY</span>
                 </div>
                 <div class="nav-links">
@@ -204,7 +204,7 @@ if (!$book) {
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>
-                        <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="THE ROBBOEB LIBRARY" class="brand-logo-footer">
+                        <img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/231703335/symbol.svg?1537014.9000000358" alt="THE ROBBOEB LIBRARY" class="brand-logo-footer">
                         THE ROBBOEB LIBRARY
                     </h3>
                     <p>Your trusted library management system for modern reading experiences.</p>

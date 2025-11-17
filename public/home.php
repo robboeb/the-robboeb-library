@@ -16,7 +16,7 @@ $stats = DatabaseHelper::getDashboardStats();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KH LIBRARY - Library Management System</title>
+    <title>KHLIBRARY - Digital Library Platform</title>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -26,8 +26,8 @@ $stats = DatabaseHelper::getDashboardStats();
         <div class="container">
             <div class="nav-content">
                 <div class="nav-brand">
-                    <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="KH LIBRARY" class="brand-logo">
-                    <span>KH LIBRARY</span>
+                    <img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/231703335/symbol.svg?1537014.9000000358" alt="KHLIBRARY" class="brand-logo">
+                    <span>KHLIBRARY</span>
                 </div>
                 <div class="nav-links">
                     <a href="<?php echo BASE_URL; ?>/public/home.php" class="nav-link active">
@@ -293,8 +293,8 @@ $stats = DatabaseHelper::getDashboardStats();
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>
-                        <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="KH LIBRARY" class="brand-logo-footer">
-                        KH LIBRARY
+                        <img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/231703335/symbol.svg?1537014.9000000358" alt="KHLIBRARY" class="brand-logo-footer">
+                        KHLIBRARY
                     </h3>
                     <p>Your trusted library management system for modern reading experiences.</p>
                 </div>
@@ -320,7 +320,7 @@ $stats = DatabaseHelper::getDashboardStats();
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 KH LIBRARY. All rights reserved. | Developed by <a href="https://t.me/eirsvi" target="_blank" style="color: #f97316; text-decoration: none;">eirsvi.t.me</a> | <a href="https://github.com/robboeb/the-robboeb-library.git" target="_blank" style="color: #f97316; text-decoration: none;"><i class="fab fa-github"></i> GitHub</a></p>
+                <p>&copy; 2025 KHLIBRARY. All rights reserved. | Developed by <a href="https://t.me/eirsvi" target="_blank" style="color: #ff5722; text-decoration: none;">eirsvi.t.me</a> | <a href="https://github.com/robboeb/the-robboeb-library.git" target="_blank" style="color: #ff5722; text-decoration: none;"><i class="fab fa-github"></i> GitHub</a></p>
             </div>
         </div>
     </footer>

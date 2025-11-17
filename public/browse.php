@@ -568,8 +568,8 @@ $categories = $pdo->query($cat_sql)->fetchAll(PDO::FETCH_ASSOC);
         <div class="container">
             <div class="nav-content">
                 <div class="nav-brand">
-                    <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="KH LIBRARY" class="brand-logo">
-                    <span>KH LIBRARY</span>
+                    <img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/231703335/symbol.svg?1537014.9000000358" alt="KHLIBRARY" class="brand-logo">
+                    <span>KHLIBRARY</span>
                 </div>
                 <div class="nav-links">
                     <a href="<?php echo BASE_URL; ?>/public/home.php" class="nav-link">
@@ -765,8 +765,8 @@ $categories = $pdo->query($cat_sql)->fetchAll(PDO::FETCH_ASSOC);
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>
-                        <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="KH LIBRARY" class="brand-logo-footer">
-                        KH LIBRARY
+                        <img src="https://s3.ca-central-1.amazonaws.com/logojoy/logos/231703335/symbol.svg?1537014.9000000358" alt="KHLIBRARY" class="brand-logo-footer">
+                        KHLIBRARY
                     </h3>
                     <p>Your trusted library management system.</p>
                 </div>
@@ -786,7 +786,7 @@ $categories = $pdo->query($cat_sql)->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 KH LIBRARY. All rights reserved. | Developed by <a href="https://t.me/eirsvi" target="_blank" style="color: #f97316; text-decoration: none;">eirsvi.t.me</a> | <a href="https://github.com/robboeb/the-robboeb-library.git" target="_blank" style="color: #f97316; text-decoration: none;"><i class="fab fa-github"></i> GitHub</a></p>
+                <p>&copy; 2025 KHLIBRARY. All rights reserved. | Developed by <a href="https://t.me/eirsvi" target="_blank" style="color: #ff5722; text-decoration: none;">eirsvi.t.me</a> | <a href="https://github.com/robboeb/the-robboeb-library.git" target="_blank" style="color: #ff5722; text-decoration: none;"><i class="fab fa-github"></i> GitHub</a></p>
             </div>
         </div>
     </footer>

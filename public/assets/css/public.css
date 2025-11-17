@@ -709,7 +709,7 @@ main, .main-content {
 .shape-1 {
     width: 500px;
     height: 500px;
-    background: linear-gradient(135deg, #f97316, #fb923c);
+    background: linear-gradient(135deg, #ff5722, #ff7e55);
     top: -200px;
     right: -100px;
     animation-delay: 0s;
@@ -763,7 +763,7 @@ main, .main-content {
     background: rgba(249, 115, 22, 0.1);
     border: 1px solid rgba(249, 115, 22, 0.3);
     border-radius: 50px;
-    color: #fb923c;
+    color: #ff7e55;
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 30px;
@@ -778,7 +778,7 @@ main, .main-content {
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, #f97316, #fb923c, #fbbf24);
+    background: linear-gradient(135deg, #ff5722, #ff7e55, #ff8a70);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -804,7 +804,7 @@ main, .main-content {
     align-items: center;
     gap: 12px;
     padding: 18px 36px;
-    background: linear-gradient(135deg, #f97316, #ea580c);
+    background: linear-gradient(135deg, #ff5722, #ee3900);
     color: white;
     font-size: 18px;
     font-weight: 700;
@@ -855,7 +855,7 @@ main, .main-content {
 .stat-inline strong {
     font-size: 32px;
     font-weight: 800;
-    color: #f97316;
+    color: #ff5722;
     line-height: 1;
     margin-bottom: 4px;
 }
@@ -908,7 +908,7 @@ main, .main-content {
     top: 0;
     bottom: 0;
     width: 30px;
-    background: linear-gradient(180deg, #f97316, #ea580c);
+    background: linear-gradient(180deg, #ff5722, #ee3900);
     border-radius: 12px 0 0 12px;
 }
 
@@ -964,7 +964,7 @@ main, .main-content {
     align-items: center;
     justify-content: center;
     font-size: 24px;
-    color: #f97316;
+    color: #ff5722;
     animation: float-element 4s ease-in-out infinite;
 }
 
@@ -1006,7 +1006,7 @@ main, .main-content {
     display: inline-block;
     padding: 8px 20px;
     background: rgba(249, 115, 22, 0.1);
-    color: #f97316;
+    color: #ff5722;
     font-size: 14px;
     font-weight: 700;
     text-transform: uppercase;
@@ -1038,7 +1038,7 @@ main, .main-content {
 
 .feature-modern:hover {
     background: white;
-    border-color: #f97316;
+    border-color: #ff5722;
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
@@ -1053,7 +1053,7 @@ main, .main-content {
 .feature-icon-bg {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, #f97316, #fb923c);
+    background: linear-gradient(135deg, #ff5722, #ff7e55);
     border-radius: 20px;
     transform: rotate(45deg);
 }
@@ -1127,7 +1127,7 @@ main, .main-content {
     align-items: center;
     gap: 12px;
     padding: 20px 40px;
-    background: linear-gradient(135deg, #f97316, #ea580c);
+    background: linear-gradient(135deg, #ff5722, #ee3900);
     color: white;
     font-size: 20px;
     font-weight: 700;
