@@ -383,7 +383,7 @@ $userStats = $stats_stmt->fetch(PDO::FETCH_ASSOC);
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 KH LIBRARY. All rights reserved.</p>
+                <p>&copy; 2025 KH LIBRARY. All rights reserved. | Developed by <a href="https://t.me/eirsvi" target="_blank" style="color: #f97316; text-decoration: none;">eirsvi.t.me</a> | <a href="https://github.com/robboeb/the-robboeb-library.git" target="_blank" style="color: #f97316; text-decoration: none;"><i class="fab fa-github"></i> GitHub</a></p>
             </div>
         </div>
     </footer>

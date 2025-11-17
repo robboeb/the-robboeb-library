@@ -58,6 +58,136 @@ $stats = DatabaseHelper::getDashboardStats();
         </div>
     </nav>
 
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+        <div class="hero-background">
+            <div class="hero-shape shape-1"></div>
+            <div class="hero-shape shape-2"></div>
+            <div class="hero-shape shape-3"></div>
+        </div>
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-left">
+                    <div class="hero-badge">
+                        <i class="fas fa-book-reader"></i>
+                        <span>Digital Library Platform</span>
+                    </div>
+                    <h1 class="hero-heading">
+                        Discover Your Next
+                        <span class="gradient-text">Great Read</span>
+                    </h1>
+                    <p class="hero-description">
+                        Explore thousands of books, borrow instantly, and immerse yourself in stories that inspire. 
+                        Your literary journey starts here.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="<?php echo BASE_URL; ?>/public/browse.php" class="cta-primary">
+                            <span>Start Exploring</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <?php if (!$isLoggedIn): ?>
+                        <a href="<?php echo BASE_URL; ?>/public/login.php" class="cta-secondary">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Join Free</span>
+                        </a>
+                        <?php endif; ?>
+                    </div>
+                    <div class="hero-stats-inline">
+                        <div class="stat-inline">
+                            <strong><?php echo number_format($stats['total_books'] ?? 0); ?>+</strong>
+                            <span>Books</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-inline">
+                            <strong><?php echo number_format($stats['total_users'] ?? 0); ?>+</strong>
+                            <span>Members</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-inline">
+                            <strong><?php echo number_format($stats['total_categories'] ?? 0); ?>+</strong>
+                            <span>Categories</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-right">
+                    <div class="book-stack">
+                        <div class="book-card book-1">
+                            <div class="book-spine"></div>
+                            <div class="book-cover">
+                                <i class="fas fa-book"></i>
+                            </div>
+                        </div>
+                        <div class="book-card book-2">
+                            <div class="book-spine"></div>
+                            <div class="book-cover">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                        </div>
+                        <div class="book-card book-3">
+                            <div class="book-spine"></div>
+                            <div class="book-cover">
+                                <i class="fas fa-bookmark"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="floating-element element-1">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="floating-element element-2">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="floating-element element-3">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Showcase -->
+    <section class="features-showcase">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Why Choose Us</span>
+                <h2 class="section-heading">Everything You Need in One Place</h2>
+            </div>
+            <div class="features-modern-grid">
+                <div class="feature-modern">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon-bg"></div>
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Instant Access</h3>
+                    <p>Browse and borrow books 24/7 from anywhere in the world</p>
+                </div>
+                <div class="feature-modern">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon-bg"></div>
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Secure Platform</h3>
+                    <p>Your data is protected with enterprise-grade security</p>
+                </div>
+                <div class="feature-modern">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon-bg"></div>
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Smart Notifications</h3>
+                    <p>Never miss a due date with automated reminders</p>
+                </div>
+                <div class="feature-modern">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon-bg"></div>
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Seamless experience across all your devices</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Categories Section -->
     <section class="categories-section">
         <div class="container">
@@ -103,6 +233,56 @@ $stats = DatabaseHelper::getDashboardStats();
                     <h3>Horror</h3>
                     <p>Thrilling Tales</p>
                 </a>
+                <a href="<?php echo BASE_URL; ?>/public/browse.php?category=2" class="category-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Non-Fiction</h3>
+                    <p>Real Stories & Facts</p>
+                </a>
+                <a href="<?php echo BASE_URL; ?>/public/browse.php?category=6" class="category-card">
+                    <i class="fas fa-user"></i>
+                    <h3>Biography</h3>
+                    <p>Life Stories</p>
+                </a>
+                <a href="<?php echo BASE_URL; ?>/public/browse.php?category=5" class="category-card">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Technology</h3>
+                    <p>Tech & Programming</p>
+                </a>
+                <a href="<?php echo BASE_URL; ?>/public/browse.php?category=3" class="category-card">
+                    <i class="fas fa-flask"></i>
+                    <h3>Science</h3>
+                    <p>Scientific Discovery</p>
+                </a>
+                <a href="<?php echo BASE_URL; ?>/public/browse.php?category=7" class="category-card">
+                    <i class="fas fa-child"></i>
+                    <h3>Children</h3>
+                    <p>Kids & Young Adult</p>
+                </a>
+                <a href="<?php echo BASE_URL; ?>/public/browse.php?category=8" class="category-card">
+                    <i class="fas fa-briefcase"></i>
+                    <h3>Business</h3>
+                    <p>Leadership & Success</p>
+                </a>
+                <a href="<?php echo BASE_URL; ?>/public/browse.php?category=9" class="category-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>Self-Help</h3>
+                    <p>Personal Growth</p>
+                </a>
+                <a href="<?php echo BASE_URL; ?>/public/browse.php?category=10" class="category-card">
+                    <i class="fas fa-utensils"></i>
+                    <h3>Cooking</h3>
+                    <p>Recipes & Food</p>
+                </a>
+                <a href="<?php echo BASE_URL; ?>/public/browse.php?category=11" class="category-card">
+                    <i class="fas fa-plane"></i>
+                    <h3>Travel</h3>
+                    <p>Adventure & Guides</p>
+                </a>
+                <a href="<?php echo BASE_URL; ?>/public/browse.php?category=12" class="category-card">
+                    <i class="fas fa-palette"></i>
+                    <h3>Art & Design</h3>
+                    <p>Creative Inspiration</p>
+                </a>
             </div>
         </div>
     </section>
@@ -140,7 +320,7 @@ $stats = DatabaseHelper::getDashboardStats();
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 KH LIBRARY. All rights reserved.</p>
+                <p>&copy; 2025 KH LIBRARY. All rights reserved. | Developed by <a href="https://t.me/eirsvi" target="_blank" style="color: #f97316; text-decoration: none;">eirsvi.t.me</a> | <a href="https://github.com/robboeb/the-robboeb-library.git" target="_blank" style="color: #f97316; text-decoration: none;"><i class="fab fa-github"></i> GitHub</a></p>
             </div>
         </div>
     </footer>
