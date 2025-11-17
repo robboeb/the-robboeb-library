@@ -267,6 +267,39 @@ $currentUser = AuthService::getCurrentUser();
     <script src="<?php echo BASE_URL; ?>/public/assets/js/api.js"></script>
     <script src="<?php echo BASE_URL; ?>/public/assets/js/sidebar.js"></script>
     <script>
+        // Fallback for Utils if not loaded
+        if (typeof Utils === 'undefined') {
+            window.Utils = {
+                escapeHtml: function(text) {
+                    const div = document.createElement('div');
+                    div.textContent = text;
+                    return div.innerHTML;
+                },
+                formatDate: function(date) {
+                    return new Date(date).toLocaleDateString();
+                },
+                formatDateTime: function(datetime) {
+                    const d = new Date(datetime);
+                    return d.toLocaleDateString() + ' ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                },
+                capitalize: function(text) {
+                    return text.charAt(0).toUpperCase() + text.slice(1);
+                }
+            };
+        }
+        
+        // Fallback for UIComponents if not loaded
+        if (typeof UIComponents === 'undefined') {
+            window.UIComponents = {
+                showToast: function(message, type) {
+                    alert(message);
+                },
+                confirm: function(message, title) {
+                    return Promise.resolve(confirm(message));
+                }
+            };
+        }
+        
         let allLoans = [];
         let pendingRequests = [];
         let searchQuery = '';
