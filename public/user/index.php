@@ -35,6 +35,21 @@ $pending_stmt = $pdo->prepare($pending_sql);
 $pending_stmt->execute([':user_id' => $user_id]);
 $pending_requests = $pending_stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Get returned books history (last 10)
+$returned_sql = "SELECT l.*, b.title, b.isbn, b.cover_image,
+                 CONCAT(a.first_name, ' ', a.last_name) as author_name,
+                 DATEDIFF(l.return_date, l.checkout_date) as days_borrowed
+                 FROM loans l
+                 JOIN books b ON l.book_id = b.book_id
+                 LEFT JOIN book_authors ba ON b.book_id = ba.book_id
+                 LEFT JOIN authors a ON ba.author_id = a.author_id
+                 WHERE l.user_id = :user_id AND l.status = 'returned'
+                 ORDER BY l.return_date DESC
+                 LIMIT 10";
+$returned_stmt = $pdo->prepare($returned_sql);
+$returned_stmt->execute([':user_id' => $user_id]);
+$returned_books = $returned_stmt->fetchAll(PDO::FETCH_ASSOC);
+
 // Calculate stats
 $overdue = 0;
 $due_soon = 0;
@@ -84,7 +99,7 @@ foreach ($active_loans as $loan) {
                         <i class="fas fa-book"></i> Browse Books
                     </a>
                     <a href="<?php echo BASE_URL; ?>/public/user/index.php" class="nav-link active">
-                        <i class="fas fa-user-circle"></i> My Profile
+                        <i class="fas fa-user"></i> My Profile
                     </a>
                     <button onclick="logout()" class="btn btn-outline" style="margin-left: var(--space-2);">
                         <i class="fas fa-sign-out-alt"></i> Logout
@@ -97,56 +112,70 @@ foreach ($active_loans as $loan) {
         </div>
     </nav>
 
-    <!-- Dashboard Content -->
-    <section class="dashboard-section" style="padding: 40px 0; background: #f7fafc;">
+    <!-- Profile Content -->
+    <section class="dashboard-section" style="padding: 40px 0; background: linear-gradient(135deg, #fff3f0 0%, #ffe5de 100%); min-height: calc(100vh - 80px);">
         <div class="container" style="max-width: 1200px;">
             
             <!-- Profile Header -->
-            <div style="background: white; padding: 40px; border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); margin-bottom: 40px;">
+            <div style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(255, 87, 34, 0.15); margin-bottom: 40px; border: 2px solid #ffccc2;">
                 <div style="display: flex; align-items: center; gap: 30px; flex-wrap: wrap;">
-                    <div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: bold; flex-shrink: 0;">
+                    <div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #ff5722 0%, #ee3900 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 56px; font-weight: bold; flex-shrink: 0; box-shadow: 0 8px 20px rgba(255, 87, 34, 0.3);">
                         <?php echo strtoupper(substr($currentUser['first_name'], 0, 1)); ?>
                     </div>
                     <div style="flex: 1; min-width: 250px;">
-                        <h1 style="margin: 0 0 8px 0; font-size: 32px; color: #2d3748;">
+                        <h1 style="margin: 0 0 12px 0; font-size: 36px; color: #111111; font-weight: 700;">
                             <?php echo htmlspecialchars($currentUser['first_name'] . ' ' . $currentUser['last_name']); ?>
                         </h1>
-                        <p style="color: #718096; font-size: 16px; margin: 0 0 16px 0;">
-                            <i class="fas fa-envelope"></i> <?php echo htmlspecialchars($currentUser['email']); ?>
+                        <p style="color: #616161; font-size: 17px; margin: 0 0 20px 0; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-envelope" style="color: #ff5722;"></i> 
+                            <?php echo htmlspecialchars($currentUser['email']); ?>
                         </p>
                         <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #eff6ff; color: #1e40af; border-radius: 20px; font-size: 13px; font-weight: 600;">
-                                <i class="fas fa-user"></i> Member
+                            <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; background: linear-gradient(135deg, #ff5722 0%, #ee3900 100%); color: white; border-radius: 25px; font-size: 14px; font-weight: 600; box-shadow: 0 4px 12px rgba(255, 87, 34, 0.3);">
+                                <i class="fas fa-user"></i> Library Member
                             </span>
-                            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; background: #d1fae5; color: #065f46; border-radius: 20px; font-size: 13px; font-weight: 600;">
-                                <i class="fas fa-check-circle"></i> Active
+                            <span style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; background: #d1fae5; color: #065f46; border-radius: 25px; font-size: 14px; font-weight: 600;">
+                                <i class="fas fa-check-circle"></i> Active Account
                             </span>
                         </div>
+                    </div>
+                    <div>
+                        <a href="<?php echo BASE_URL; ?>/public/user/profile.php" class="btn" style="background: linear-gradient(135deg, #ff5722 0%, #ee3900 100%); color: white; padding: 12px 24px; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; box-shadow: 0 4px 12px rgba(255, 87, 34, 0.3); transition: all 0.3s ease;">
+                            <i class="fas fa-user-edit"></i> Edit Profile
+                        </a>
                     </div>
                 </div>
             </div>
 
             <!-- Quick Stats -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px;">
-                <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                    <i class="fas fa-book-reader" style="font-size: 32px; color: #667eea; margin-bottom: 10px;"></i>
-                    <h3 style="font-size: 28px; margin: 10px 0 5px 0; color: #2d3748;"><?php echo count($active_loans); ?></h3>
-                    <p style="color: #718096; font-size: 14px; margin: 0;">Currently Borrowed</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-bottom: 40px;">
+                <div style="background: white; padding: 30px; border-radius: 16px; border-left: 5px solid #ff5722; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.08); transition: transform 0.3s ease;">
+                    <div style="width: 70px; height: 70px; margin: 0 auto 16px; background: linear-gradient(135deg, #fff3f0 0%, #ffe5de 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-book-reader" style="font-size: 32px; color: #ff5722;"></i>
+                    </div>
+                    <h3 style="font-size: 32px; margin: 10px 0 5px 0; color: #111111; font-weight: 700;"><?php echo count($active_loans); ?></h3>
+                    <p style="color: #616161; font-size: 15px; margin: 0; font-weight: 500;">Currently Borrowed</p>
                 </div>
-                <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                    <i class="fas fa-hourglass-half" style="font-size: 32px; color: #3b82f6; margin-bottom: 10px;"></i>
-                    <h3 style="font-size: 28px; margin: 10px 0 5px 0; color: #2d3748;"><?php echo count($pending_requests); ?></h3>
-                    <p style="color: #718096; font-size: 14px; margin: 0;">Pending Requests</p>
+                <div style="background: white; padding: 30px; border-radius: 16px; border-left: 5px solid #ff7e55; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.08); transition: transform 0.3s ease;">
+                    <div style="width: 70px; height: 70px; margin: 0 auto 16px; background: linear-gradient(135deg, #fff3f0 0%, #ffe5de 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-hourglass-half" style="font-size: 32px; color: #ff7e55;"></i>
+                    </div>
+                    <h3 style="font-size: 32px; margin: 10px 0 5px 0; color: #111111; font-weight: 700;"><?php echo count($pending_requests); ?></h3>
+                    <p style="color: #616161; font-size: 15px; margin: 0; font-weight: 500;">Pending Requests</p>
                 </div>
-                <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                    <i class="fas fa-exclamation-triangle" style="font-size: 32px; color: #ef4444; margin-bottom: 10px;"></i>
-                    <h3 style="font-size: 28px; margin: 10px 0 5px 0; color: #2d3748;"><?php echo $overdue; ?></h3>
-                    <p style="color: #718096; font-size: 14px; margin: 0;">Overdue Books</p>
+                <div style="background: white; padding: 30px; border-radius: 16px; border-left: 5px solid #ef4444; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.08); transition: transform 0.3s ease;">
+                    <div style="width: 70px; height: 70px; margin: 0 auto 16px; background: #fee2e2; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 32px; color: #ef4444;"></i>
+                    </div>
+                    <h3 style="font-size: 32px; margin: 10px 0 5px 0; color: #111111; font-weight: 700;"><?php echo $overdue; ?></h3>
+                    <p style="color: #616161; font-size: 15px; margin: 0; font-weight: 500;">Overdue Books</p>
                 </div>
-                <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                    <i class="fas fa-clock" style="font-size: 32px; color: #f59e0b; margin-bottom: 10px;"></i>
-                    <h3 style="font-size: 28px; margin: 10px 0 5px 0; color: #2d3748;"><?php echo $due_soon; ?></h3>
-                    <p style="color: #718096; font-size: 14px; margin: 0;">Due Soon (3 days)</p>
+                <div style="background: white; padding: 30px; border-radius: 16px; border-left: 5px solid #f59e0b; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.08); transition: transform 0.3s ease;">
+                    <div style="width: 70px; height: 70px; margin: 0 auto 16px; background: #fef3c7; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-clock" style="font-size: 32px; color: #f59e0b;"></i>
+                    </div>
+                    <h3 style="font-size: 32px; margin: 10px 0 5px 0; color: #111111; font-weight: 700;"><?php echo $due_soon; ?></h3>
+                    <p style="color: #616161; font-size: 15px; margin: 0; font-weight: 500;">Due Soon (3 days)</p>
                 </div>
             </div>
 
@@ -289,6 +318,59 @@ foreach ($active_loans as $loan) {
                 </div>
             <?php endif; ?>
 
+        </div>
+    </section>
+
+            <!-- Returned Books History -->
+            <?php if (!empty($returned_books)): ?>
+                <div style="background: white; padding: 30px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-top: 30px;">
+                    <h2 style="margin: 0 0 25px 0; font-size: 24px; color: #2d3748; display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-history"></i> Borrowing History
+                    </h2>
+                    
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #f9fafb; border-bottom: 2px solid #e2e8f0;">
+                                    <th style="padding: 12px; text-align: left; font-size: 13px; color: #718096; font-weight: 600; text-transform: uppercase;">Book Title</th>
+                                    <th style="padding: 12px; text-align: left; font-size: 13px; color: #718096; font-weight: 600; text-transform: uppercase;">Borrowed Date</th>
+                                    <th style="padding: 12px; text-align: left; font-size: 13px; color: #718096; font-weight: 600; text-transform: uppercase;">Returned Date</th>
+                                    <th style="padding: 12px; text-align: center; font-size: 13px; color: #718096; font-weight: 600; text-transform: uppercase;">Days Borrowed</th>
+                                    <th style="padding: 12px; text-align: center; font-size: 13px; color: #718096; font-weight: 600; text-transform: uppercase;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($returned_books as $book): ?>
+                                    <tr style="border-bottom: 1px solid #e2e8f0;">
+                                        <td style="padding: 16px;">
+                                            <div style="font-weight: 600; color: #2d3748; margin-bottom: 4px;"><?php echo htmlspecialchars($book['title']); ?></div>
+                                            <div style="font-size: 13px; color: #718096;">
+                                                <i class="fas fa-user"></i> <?php echo htmlspecialchars($book['author_name'] ?: 'Unknown'); ?>
+                                            </div>
+                                        </td>
+                                        <td style="padding: 16px; color: #2d3748;">
+                                            <?php echo date('M d, Y', strtotime($book['checkout_date'])); ?>
+                                        </td>
+                                        <td style="padding: 16px; color: #2d3748;">
+                                            <?php echo date('M d, Y', strtotime($book['return_date'])); ?>
+                                        </td>
+                                        <td style="padding: 16px; text-align: center;">
+                                            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; background: #e0f2fe; color: #075985;">
+                                                <?php echo $book['days_borrowed']; ?> days
+                                            </span>
+                                        </td>
+                                        <td style="padding: 16px; text-align: center;">
+                                            <span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; background: #d1fae5; color: #065f46;">
+                                                <i class="fas fa-check-circle"></i> Returned
+                                            </span>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
     </section>
 

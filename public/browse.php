@@ -54,98 +54,146 @@ $categories = $pdo->query($cat_sql)->fetchAll(PDO::FETCH_ASSOC);
     <style>
         .book-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+            padding: 0 10px;
         }
+        
         .book-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             position: relative;
+            border: 2px solid transparent;
         }
+        
         .book-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.25);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 87, 34, 0.25);
+            border-color: #ff5722;
         }
-        .book-card:hover .book-cover {
-            transform: scale(1.05);
-        }
+        
         .book-cover-wrapper {
             width: 100%;
-            height: 350px;
+            height: 380px;
             overflow: hidden;
             position: relative;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
         }
+        
         .book-cover {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease;
         }
+        
+        .book-card:hover .book-cover {
+            transform: scale(1.08);
+        }
+        
         .book-overlay {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: linear-gradient(135deg, rgba(255, 87, 34, 0.95) 0%, rgba(238, 57, 0, 0.95) 100%);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             opacity: 0;
             transition: opacity 0.3s ease;
+            padding: 20px;
         }
+        
         .book-card:hover .book-overlay {
             opacity: 1;
         }
+        
         .book-overlay-text {
             color: white;
             font-size: 16px;
             font-weight: 600;
             text-align: center;
         }
-        .book-info {
-            padding: 20px;
+        
+        .book-overlay-text i {
+            font-size: 32px;
+            margin-bottom: 12px;
+            animation: bounce 2s infinite;
         }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .book-info {
+            padding: 24px 20px;
+        }
+        
         .book-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #2d3748;
-            margin: 0 0 8px 0;
+            font-size: 17px;
+            font-weight: 700;
+            color: #111111;
+            margin: 0 0 10px 0;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            min-height: 48px;
+            min-height: 44px;
+            line-height: 1.4;
         }
+        
         .book-author {
             font-size: 14px;
-            color: #718096;
-            margin: 0 0 12px 0;
+            color: #616161;
+            margin: 0 0 14px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
+        
+        .book-author i {
+            color: #ff5722;
+        }
+        
         .book-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
             font-size: 13px;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
         }
+        
+        .book-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .book-meta i {
+            color: #ff5722;
+        }
+        
         .availability {
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            padding: 5px 12px;
+            gap: 6px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-weight: 600;
             font-size: 12px;
         }
+        
         .availability.available {
             background: #d1fae5;
             color: #065f46;
@@ -579,9 +627,15 @@ $categories = $pdo->query($cat_sql)->fetchAll(PDO::FETCH_ASSOC);
                         <i class="fas fa-book"></i> Browse Books
                     </a>
                     <?php if ($currentUser): ?>
-                        <a href="<?php echo BASE_URL; ?>/public/user/index.php" class="nav-link">
-                            <i class="fas fa-tachometer-alt"></i> My Dashboard
-                        </a>
+                        <?php if ($currentUser['user_type'] === 'admin'): ?>
+                            <a href="<?php echo BASE_URL; ?>/public/admin/index.php" class="nav-link">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                        <?php else: ?>
+                            <a href="<?php echo BASE_URL; ?>/public/user/profile.php" class="nav-link">
+                                <i class="fas fa-user"></i> My Profile
+                            </a>
+                        <?php endif; ?>
                         <button onclick="logout()" class="btn btn-outline" style="margin-left: var(--space-2);">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </button>
@@ -682,8 +736,17 @@ $categories = $pdo->query($cat_sql)->fetchAll(PDO::FETCH_ASSOC);
                                     <a href="<?php echo BASE_URL; ?>/public/admin/loans.php" class="btn btn-outline" style="width: 100%; text-align: center;" onclick="event.stopPropagation();">
                                         <i class="fas fa-cog"></i> Manage in Admin
                                     </a>
-                                <?php elseif (!$currentUser): ?>
-                                    <a href="<?php echo BASE_URL; ?>/public/login.php" class="btn btn-outline" style="width: 100%; text-align: center;" onclick="event.stopPropagation();">
+                                <?php else: ?>
+                                    <div style="background: linear-gradient(135deg, #fff3f0 0%, #ffe5de 100%); padding: 12px; border-radius: 10px; text-align: center; margin-bottom: 10px; border: 2px dashed #ff5722;" onclick="event.stopPropagation();">
+                                        <p style="margin: 0 0 8px 0; color: #616161; font-size: 13px; font-weight: 500;">
+                                            <i class="fas fa-info-circle" style="color: #ff5722;"></i> 
+                                            Account required to borrow
+                                        </p>
+                                        <p style="margin: 0; color: #9e9e9e; font-size: 12px;">
+                                            Contact admin office to create an account
+                                        </p>
+                                    </div>
+                                    <a href="<?php echo BASE_URL; ?>/public/login.php" class="btn" style="width: 100%; text-align: center; background: linear-gradient(135deg, #ff5722 0%, #ee3900 100%); color: white; font-weight: 600;" onclick="event.stopPropagation();">
                                         <i class="fas fa-sign-in-alt"></i> Login to Borrow
                                     </a>
                                 <?php endif; ?>
@@ -893,55 +956,8 @@ $categories = $pdo->query($cat_sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function showBookDetail(book) {
-        const modal = document.getElementById('bookDetailModal');
-        const baseUrl = '<?php echo BASE_URL; ?>';
-        
-        // Set book cover
-        document.getElementById('modalBookCover').src = book.cover_image || baseUrl + '/public/assets/images/book-placeholder.jpg';
-        
-        // Set book title and author
-        document.getElementById('modalBookTitle').textContent = book.title;
-        document.getElementById('modalBookAuthor').textContent = book.author_name || 'Unknown Author';
-        
-        // Set badges
-        const badgesEl = document.getElementById('modalBookBadges');
-        let badgesHTML = '';
-        
-        if (book.available_quantity > 0) {
-            badgesHTML += `
-                <span class="badge-pill badge-available">
-                    <i class="fas fa-check-circle"></i>
-                    ${book.available_quantity} Available
-                </span>
-            `;
-        } else {
-            badgesHTML += `
-                <span class="badge-pill badge-unavailable">
-                    <i class="fas fa-times-circle"></i>
-                    Not Available
-                </span>
-            `;
-        }
-        
-        badgesHTML += `
-            <span class="badge-pill badge-loan">
-                <i class="fas fa-calendar-alt"></i>
-                ${loanPeriod} Days Loan
-            </span>
-        `;
-        
-        badgesEl.innerHTML = badgesHTML;
-        
-        // Set book details
-        document.getElementById('modalBookCategory').textContent = book.category_name || 'Uncategorized';
-        document.getElementById('modalBookISBN').textContent = book.isbn || 'N/A';
-        
-        // Set action section based on user type
-        const actionSection = document.getElementById('modalActionSection');
-        
-        if (currentUser && currentUser.user_type === 'patron') {
-            if (book.available_quantity > 0) {
-                actionSection.innerHTML = `
+        // Redirect to book details page
+        window.location.href = '<?php echo BASE_URL; ?>/public/book-details.php?id=' + book.book_id;
                     <h3 class="action-title">
                         <i class="fas fa-hand-paper"></i>
                         Borrow This Book

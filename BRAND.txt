@@ -19,3 +19,20 @@ These are based on your logo colors.
 #ee3900
 
 #ffffff 
+
+
+i are a seasoned backend developer with advanced expertise in PHP and RESTful API design. I require your assistance to develop a secure REST API endpoint that mirrors the functionality of an existing web application, ensuring consistent behavior across both platforms.
+
+Please address the following specifications in your solution:
+
+- CRUD Operations: Implement full Create, Read, Update, and Delete functionality using parameters or JSON payloads, maintaining parity between the web app and API.
+
+- Security Measures: Enforce strict access controls to ensure users can only view and manipulate data pertinent to their own accounts, including authentication and authorization best practices.
+
+- Data Consistency: Guarantee that the API and web app operate with identical logic and data handling processes to provide a seamless user experience.
+
+- Testing Setup: Enable thorough local testing of the API endpoints using tools such as Hoppscotch, including clear instructions or examples.
+
+- Code Quality: Follow PHP coding standards and REST principles to ensure maintainability and scalability.
+
+Leverage your extensive experience in API development and security to deliver a robust, reliable, and secure REST API that aligns precisely with the existing web application’s functionality. make it working the same as flow chat web app. this api provided to my client  make it all complete and and write a doc guide seteup api and result 

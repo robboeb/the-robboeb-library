@@ -37,14 +37,18 @@ $stats = DatabaseHelper::getDashboardStats();
                         <i class="fas fa-book"></i> Browse Books
                     </a>
                     <?php if ($isLoggedIn): ?>
-                        <a href="<?php echo $currentUser['user_type'] === 'admin' ? BASE_URL . '/public/admin/index.php' : BASE_URL . '/public/user/index.php'; ?>" class="nav-link">
-                            <div style="display: inline-flex; align-items: center; gap: 8px;">
-                                <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold;">
-                                    <?php echo strtoupper(substr($currentUser['first_name'], 0, 1)); ?>
-                                </div>
-                                <span><?php echo htmlspecialchars($currentUser['first_name']); ?></span>
-                            </div>
-                        </a>
+                        <?php if ($currentUser['user_type'] === 'admin'): ?>
+                            <a href="<?php echo BASE_URL; ?>/public/admin/index.php" class="nav-link">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                        <?php else: ?>
+                            <a href="<?php echo BASE_URL; ?>/public/user/profile.php" class="nav-link">
+                                <i class="fas fa-user"></i> My Profile
+                            </a>
+                        <?php endif; ?>
+                        <button onclick="logout()" class="btn btn-outline" style="margin-left: var(--space-2);">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
                     <?php else: ?>
                         <a href="<?php echo BASE_URL; ?>/public/login.php" class="btn btn-primary">
                             <i class="fas fa-sign-in-alt"></i> Login
@@ -332,6 +336,26 @@ $stats = DatabaseHelper::getDashboardStats();
         document.querySelector('.mobile-menu-toggle')?.addEventListener('click', function() {
             document.querySelector('.nav-links').classList.toggle('active');
         });
+        
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                fetch('<?php echo BASE_URL; ?>/api/auth/logout', {
+                    method: 'POST',
+                    credentials: 'same-origin'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = '<?php echo BASE_URL; ?>/public/login.php?logout=1';
+                    }
+                })
+                .catch(error => {
+                    console.error('Logout error:', error);
+                    window.location.href = '<?php echo BASE_URL; ?>/public/login.php?logout=1';
+                });
+            }
+        }
     </script>
 </body>
 </html>

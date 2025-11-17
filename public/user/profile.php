@@ -33,81 +33,9 @@ $userStats = $stats_stmt->fetch(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/main.css">
     <style>
-        .profile-container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        
-        .profile-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-        
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: white;
-            color: #667eea;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            font-weight: bold;
-            flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        
-        .profile-info h1 {
-            margin: 0 0 10px 0;
-            font-size: 32px;
-        }
-        
-        .profile-info p {
-            margin: 5px 0;
-            opacity: 0.95;
-            font-size: 16px;
-        }
-        
-        .profile-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-box {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        
-        .stat-box i {
-            font-size: 32px;
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-        
-        .stat-box h3 {
-            font-size: 28px;
-            margin: 10px 0 5px 0;
-            color: #2d3748;
-        }
-        
-        .stat-box p {
-            color: #718096;
-            font-size: 14px;
-            margin: 0;
+        /* Simplified clean styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
         
         .profile-details {
@@ -220,9 +148,6 @@ $userStats = $stats_stmt->fetch(PDO::FETCH_ASSOC);
                     <a href="<?php echo BASE_URL; ?>/public/browse.php" class="nav-link">
                         <i class="fas fa-book"></i> Browse Books
                     </a>
-                    <a href="<?php echo BASE_URL; ?>/public/user/index.php" class="nav-link">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
-                    </a>
                     <a href="<?php echo BASE_URL; ?>/public/user/profile.php" class="nav-link active">
                         <i class="fas fa-user"></i> My Profile
                     </a>
@@ -238,117 +163,62 @@ $userStats = $stats_stmt->fetch(PDO::FETCH_ASSOC);
     </nav>
 
     <!-- Profile Content -->
-    <div class="profile-container">
-        <!-- Profile Header -->
-        <div class="profile-header">
-            <div class="profile-avatar">
-                <?php echo strtoupper(substr($currentUser['first_name'], 0, 1)); ?>
+    <div style="background: #f5f5f5; min-height: calc(100vh - 80px); padding: 50px 20px;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            
+            <!-- Profile Card -->
+            <div style="background: white; border-radius: 16px; padding: 40px; margin-bottom: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+                <div style="display: flex; align-items: center; gap: 25px; margin-bottom: 30px; flex-wrap: wrap;">
+                    <div style="width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg, #ff5722 0%, #ee3900 100%); color: white; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 700; flex-shrink: 0;">
+                        <?php echo strtoupper(substr($currentUser['first_name'], 0, 1)); ?>
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <h1 style="margin: 0 0 8px 0; font-size: 28px; color: #111111; font-weight: 700;">
+                            <?php echo htmlspecialchars($currentUser['first_name'] . ' ' . $currentUser['last_name']); ?>
+                        </h1>
+                        <p style="margin: 4px 0; color: #616161; font-size: 15px;">
+                            <i class="fas fa-envelope" style="color: #ff5722; width: 18px;"></i> 
+                            <?php echo htmlspecialchars($userDetails['email']); ?>
+                        </p>
+                        <p style="margin: 4px 0; color: #616161; font-size: 15px;">
+                            <i class="fas fa-calendar" style="color: #ff5722; width: 18px;"></i> 
+                            Member since <?php echo date('F Y', strtotime($userDetails['created_at'])); ?>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Stats Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px;">
+                    <div style="text-align: center; padding: 25px 15px; background: #fafafa; border-radius: 12px; border: 2px solid #eeeeee;">
+                        <i class="fas fa-book-reader" style="font-size: 28px; color: #ff5722; margin-bottom: 10px;"></i>
+                        <h3 style="margin: 8px 0 4px 0; font-size: 32px; color: #111111; font-weight: 700;"><?php echo $userStats['active_loans']; ?></h3>
+                        <p style="margin: 0; color: #616161; font-size: 14px; font-weight: 500;">Active Loans</p>
+                    </div>
+                    <div style="text-align: center; padding: 25px 15px; background: #fafafa; border-radius: 12px; border: 2px solid #eeeeee;">
+                        <i class="fas fa-check-circle" style="font-size: 28px; color: #10b981; margin-bottom: 10px;"></i>
+                        <h3 style="margin: 8px 0 4px 0; font-size: 32px; color: #111111; font-weight: 700;"><?php echo $userStats['total_returned']; ?></h3>
+                        <p style="margin: 0; color: #616161; font-size: 14px; font-weight: 500;">Books Returned</p>
+                    </div>
+                    <div style="text-align: center; padding: 25px 15px; background: #fafafa; border-radius: 12px; border: 2px solid #eeeeee;">
+                        <i class="fas fa-history" style="font-size: 28px; color: #3b82f6; margin-bottom: 10px;"></i>
+                        <h3 style="margin: 8px 0 4px 0; font-size: 32px; color: #111111; font-weight: 700;"><?php echo $userStats['total_loans']; ?></h3>
+                        <p style="margin: 0; color: #616161; font-size: 14px; font-weight: 500;">Total Borrowed</p>
+                    </div>
+                    <div style="text-align: center; padding: 25px 15px; background: #fafafa; border-radius: 12px; border: 2px solid #eeeeee;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 28px; color: #ef4444; margin-bottom: 10px;"></i>
+                        <h3 style="margin: 8px 0 4px 0; font-size: 32px; color: #111111; font-weight: 700;"><?php echo $userStats['overdue_count']; ?></h3>
+                        <p style="margin: 0; color: #616161; font-size: 14px; font-weight: 500;">Overdue Books</p>
+                    </div>
+                </div>
             </div>
-            <div class="profile-info">
-                <h1><?php echo htmlspecialchars($currentUser['first_name'] . ' ' . $currentUser['last_name']); ?></h1>
-                <p><i class="fas fa-envelope"></i> <?php echo htmlspecialchars($userDetails['email']); ?></p>
-                <p><i class="fas fa-id-badge"></i> Member since <?php echo date('F Y', strtotime($userDetails['created_at'])); ?></p>
-            </div>
-        </div>
 
-        <!-- Statistics -->
-        <div class="profile-stats">
-            <div class="stat-box">
-                <i class="fas fa-book-reader"></i>
-                <h3><?php echo $userStats['active_loans']; ?></h3>
-                <p>Active Loans</p>
-            </div>
-            <div class="stat-box">
-                <i class="fas fa-check-circle"></i>
-                <h3><?php echo $userStats['total_returned']; ?></h3>
-                <p>Books Returned</p>
-            </div>
-            <div class="stat-box">
-                <i class="fas fa-history"></i>
-                <h3><?php echo $userStats['total_loans']; ?></h3>
-                <p>Total Borrowed</p>
-            </div>
-            <div class="stat-box">
-                <i class="fas fa-exclamation-triangle"></i>
-                <h3><?php echo $userStats['overdue_count']; ?></h3>
-                <p>Overdue Books</p>
-            </div>
-        </div>
-
-        <!-- Profile Details -->
-        <div class="profile-details">
-            <h2><i class="fas fa-user-circle"></i> Profile Information</h2>
-            
-            <div class="detail-grid">
-                <div class="detail-item">
-                    <span class="detail-label">Full Name</span>
-                    <span class="detail-value">
-                        <i class="fas fa-user"></i>
-                        <?php echo htmlspecialchars($currentUser['first_name'] . ' ' . $currentUser['last_name']); ?>
-                    </span>
-                </div>
-                
-                <div class="detail-item">
-                    <span class="detail-label">Email Address</span>
-                    <span class="detail-value">
-                        <i class="fas fa-envelope"></i>
-                        <?php echo htmlspecialchars($userDetails['email']); ?>
-                    </span>
-                </div>
-                
-                <div class="detail-item">
-                    <span class="detail-label">Phone Number</span>
-                    <span class="detail-value">
-                        <i class="fas fa-phone"></i>
-                        <?php echo htmlspecialchars($userDetails['phone'] ?: 'Not provided'); ?>
-                    </span>
-                </div>
-                
-                <div class="detail-item">
-                    <span class="detail-label">Account Status</span>
-                    <span class="detail-value">
-                        <span class="status-badge <?php echo $userDetails['status'] === 'active' ? 'status-active' : 'status-inactive'; ?>">
-                            <i class="fas fa-circle"></i>
-                            <?php echo ucfirst($userDetails['status']); ?>
-                        </span>
-                    </span>
-                </div>
-                
-                <div class="detail-item">
-                    <span class="detail-label">Member Type</span>
-                    <span class="detail-value">
-                        <i class="fas fa-id-card"></i>
-                        <?php echo ucfirst($userDetails['user_type']); ?>
-                    </span>
-                </div>
-                
-                <div class="detail-item">
-                    <span class="detail-label">Member Since</span>
-                    <span class="detail-value">
-                        <i class="fas fa-calendar-alt"></i>
-                        <?php echo date('F d, Y', strtotime($userDetails['created_at'])); ?>
-                    </span>
-                </div>
-            </div>
-            
-            <?php if ($userDetails['address']): ?>
-            <div class="detail-grid" style="margin-top: 25px;">
-                <div class="detail-item" style="grid-column: 1 / -1;">
-                    <span class="detail-label">Address</span>
-                    <span class="detail-value">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <?php echo htmlspecialchars($userDetails['address']); ?>
-                    </span>
-                </div>
-            </div>
-            <?php endif; ?>
-            
-            <div class="action-buttons">
-                <a href="<?php echo BASE_URL; ?>/public/user/index.php" class="btn btn-primary">
-                    <i class="fas fa-tachometer-alt"></i> Back to Dashboard
-                </a>
-                <a href="<?php echo BASE_URL; ?>/public/browse.php" class="btn btn-outline">
+            <!-- Action Buttons -->
+            <div style="text-align: center;">
+                <a href="<?php echo BASE_URL; ?>/public/browse.php" style="display: inline-block; background: #ff5722; color: white; padding: 14px 32px; font-size: 16px; border-radius: 10px; text-decoration: none; font-weight: 600; margin: 0 8px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(255, 87, 34, 0.3);">
                     <i class="fas fa-book"></i> Browse Books
+                </a>
+                <a href="<?php echo BASE_URL; ?>/public/user/index.php" style="display: inline-block; background: white; color: #ff5722; padding: 14px 32px; font-size: 16px; border-radius: 10px; text-decoration: none; font-weight: 600; margin: 0 8px; border: 2px solid #ff5722; transition: all 0.3s ease;">
+                    <i class="fas fa-user"></i> My Loans
                 </a>
             </div>
         </div>

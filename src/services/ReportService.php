@@ -12,32 +12,37 @@ class ReportService {
         try {
             $stats = [];
 
-            $booksSql = "SELECT COUNT(*) as total_books, SUM(total_copies) as total_copies FROM books";
+            // Total books
+            $booksSql = "SELECT COUNT(*) as total_books FROM books";
             $booksStmt = $this->db->query($booksSql);
             $booksData = $booksStmt->fetch();
             $stats['total_books'] = (int)$booksData['total_books'];
-            $stats['total_copies'] = (int)($booksData['total_copies'] ?? 0);
 
-            $loansSql = "SELECT COUNT(*) as active_loans FROM loans WHERE return_date IS NULL";
+            // Active loans
+            $loansSql = "SELECT COUNT(*) as active_loans FROM loans WHERE status = 'active'";
             $loansStmt = $this->db->query($loansSql);
             $loansData = $loansStmt->fetch();
             $stats['active_loans'] = (int)$loansData['active_loans'];
 
-            $overdueSql = "SELECT COUNT(*) as overdue_loans FROM loans WHERE return_date IS NULL AND due_date < CURDATE()";
+            // Overdue loans
+            $overdueSql = "SELECT COUNT(*) as overdue_loans FROM loans WHERE status = 'active' AND due_date < CURDATE()";
             $overdueStmt = $this->db->query($overdueSql);
             $overdueData = $overdueStmt->fetch();
             $stats['overdue_loans'] = (int)$overdueData['overdue_loans'];
 
+            // Total users
             $usersSql = "SELECT COUNT(*) as total_users FROM users WHERE status = 'active'";
             $usersStmt = $this->db->query($usersSql);
             $usersData = $usersStmt->fetch();
             $stats['total_users'] = (int)$usersData['total_users'];
 
+            // Total categories
             $categoriesSql = "SELECT COUNT(*) as total_categories FROM categories";
             $categoriesStmt = $this->db->query($categoriesSql);
             $categoriesData = $categoriesStmt->fetch();
             $stats['total_categories'] = (int)$categoriesData['total_categories'];
 
+            // Total authors
             $authorsSql = "SELECT COUNT(*) as total_authors FROM authors";
             $authorsStmt = $this->db->query($authorsSql);
             $authorsData = $authorsStmt->fetch();
@@ -46,7 +51,14 @@ class ReportService {
             return $stats;
         } catch (PDOException $e) {
             error_log("ReportService::getDashboardStats error: " . $e->getMessage());
-            throw new Exception("Error fetching dashboard stats: " . $e->getMessage());
+            return [
+                'total_books' => 0,
+                'active_loans' => 0,
+                'overdue_loans' => 0,
+                'total_users' => 0,
+                'total_categories' => 0,
+                'total_authors' => 0
+            ];
         }
     }
 
@@ -55,10 +67,10 @@ class ReportService {
             $startDate = $startDate ?? date('Y-m-d', strtotime('-30 days'));
             $endDate = $endDate ?? date('Y-m-d');
 
-            $sql = "SELECT DATE(loan_date) as date, COUNT(*) as count 
+            $sql = "SELECT DATE(created_at) as date, COUNT(*) as count 
                     FROM loans 
-                    WHERE loan_date BETWEEN :start_date AND :end_date 
-                    GROUP BY DATE(loan_date) 
+                    WHERE created_at BETWEEN :start_date AND :end_date 
+                    GROUP BY DATE(created_at) 
                     ORDER BY date";
             
             $stmt = $this->db->prepare($sql);
@@ -69,7 +81,7 @@ class ReportService {
             return $stmt->fetchAll();
         } catch (PDOException $e) {
             error_log("ReportService::getLoanTrends error: " . $e->getMessage());
-            throw new Exception("Error fetching loan trends");
+            return [];
         }
     }
 
@@ -78,7 +90,7 @@ class ReportService {
             $sql = "SELECT b.book_id, b.title, b.isbn, COUNT(l.loan_id) as loan_count 
                     FROM books b 
                     LEFT JOIN loans l ON b.book_id = l.book_id 
-                    GROUP BY b.book_id 
+                    GROUP BY b.book_id, b.title, b.isbn 
                     ORDER BY loan_count DESC 
                     LIMIT :limit";
             
@@ -88,23 +100,24 @@ class ReportService {
             
             return $stmt->fetchAll();
         } catch (PDOException $e) {
-            throw new Exception("Error fetching popular books");
+            error_log("ReportService::getPopularBooks error: " . $e->getMessage());
+            return [];
         }
     }
 
     public function getCategoryDistribution() {
         try {
-            $sql = "SELECT c.category_name, COUNT(b.book_id) as book_count 
+            $sql = "SELECT c.name as category_name, COUNT(b.book_id) as book_count 
                     FROM categories c 
                     LEFT JOIN books b ON c.category_id = b.category_id 
-                    GROUP BY c.category_id, c.category_name 
+                    GROUP BY c.category_id, c.name 
                     ORDER BY book_count DESC";
             
             $stmt = $this->db->query($sql);
             return $stmt->fetchAll();
         } catch (PDOException $e) {
             error_log("ReportService::getCategoryDistribution error: " . $e->getMessage());
-            throw new Exception("Error fetching category distribution");
+            return [];
         }
     }
 
@@ -126,7 +139,7 @@ class ReportService {
             return $stmt->fetchAll();
         } catch (PDOException $e) {
             error_log("ReportService::getMostActiveUsers error: " . $e->getMessage());
-            throw new Exception("Error fetching most active users");
+            return [];
         }
     }
 
