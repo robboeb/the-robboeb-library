@@ -28,9 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
 async function logout() {
     try {
         await API.auth.logout();
-        window.location.href = '/library-pro/public/login.php';
+        window.location.href = '/the-robboeb-library/public/home.php';
     } catch (error) {
         console.error('Logout failed:', error);
-        window.location.href = '/library-pro/public/login.php';
+        window.location.href = '/the-robboeb-library/public/home.php';
     }
 }

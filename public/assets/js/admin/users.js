@@ -141,7 +141,7 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
 
 function logout() {
     API.auth.logout().then(() => {
-        window.location.href = '/library-pro/public/login.php';
+        window.location.href = '/the-robboeb-library/public/home.php';
     });
 }
 

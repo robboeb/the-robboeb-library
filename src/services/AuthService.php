@@ -5,6 +5,15 @@ class AuthService {
     
     public static function createSession($user) {
         if (session_status() === PHP_SESSION_NONE) {
+            // Set session cookie parameters to expire when browser closes
+            session_set_cookie_params([
+                'lifetime' => 0, // Expire when browser closes
+                'path' => '/',
+                'domain' => '',
+                'secure' => false,
+                'httponly' => true,
+                'samesite' => 'Lax'
+            ]);
             session_name(SESSION_NAME);
             session_start();
         }
@@ -18,6 +27,7 @@ class AuthService {
         $_SESSION['last_name'] = $user['last_name'];
         $_SESSION['last_activity'] = time();
         $_SESSION['created_at'] = time();
+        $_SESSION['logged_in'] = true;
         
         return true;
     }
@@ -28,22 +38,34 @@ class AuthService {
             session_start();
         }
         
-        $_SESSION = [];
+        // Clear all session variables
+        $_SESSION = array();
         
-        if (isset($_COOKIE[session_name()])) {
+        // Delete all session cookies
+        if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
-            setcookie(
-                session_name(),
-                '',
-                time() - 3600,
-                $params['path'],
-                $params['domain'],
-                $params['secure'],
-                $params['httponly']
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
             );
         }
         
+        // Clear custom session cookie
+        if (isset($_COOKIE[SESSION_NAME])) {
+            setcookie(SESSION_NAME, '', time() - 42000, '/', '', false, true);
+            unset($_COOKIE[SESSION_NAME]);
+        }
+        
+        // Clear PHP session cookie
+        if (isset($_COOKIE[session_name()])) {
+            setcookie(session_name(), '', time() - 42000, '/', '', false, true);
+            unset($_COOKIE[session_name()]);
+        }
+        
+        // Destroy the session completely
+        session_unset();
         session_destroy();
+        
         return true;
     }
 
@@ -53,15 +75,18 @@ class AuthService {
             session_start();
         }
         
-        if (!isset($_SESSION['user_id'])) {
+        // Check if user_id and logged_in flag exist
+        if (!isset($_SESSION['user_id']) || !isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             return false;
         }
         
+        // Check if session has expired
         if (self::isSessionExpired()) {
             self::destroySession();
             return false;
         }
         
+        // Update last activity time
         $_SESSION['last_activity'] = time();
         return true;
     }
@@ -122,18 +147,24 @@ class AuthService {
 
     public static function initSession() {
         if (session_status() === PHP_SESSION_NONE) {
-            // Set session cookie parameters
+            // Set session cookie parameters - expire when browser closes
             session_set_cookie_params([
-                'lifetime' => 0,
+                'lifetime' => 0, // Session expires when browser closes
                 'path' => '/',
                 'domain' => '',
                 'secure' => false,
                 'httponly' => true,
-                'samesite' => 'Lax'
+                'samesite' => 'Strict'
             ]);
             
             session_name(SESSION_NAME);
             session_start();
+            
+            // Regenerate session ID to prevent fixation
+            if (!isset($_SESSION['initiated'])) {
+                session_regenerate_id(true);
+                $_SESSION['initiated'] = true;
+            }
         }
     }
 }

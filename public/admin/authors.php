@@ -205,7 +205,7 @@ $currentUser = AuthService::getCurrentUser();
         });
         
         function logout() {
-            API.auth.logout().then(() => window.location.href = '/library-pro/public/login.php');
+            API.auth.logout().then(() => window.location.href = '/the-robboeb-library/public/home.php');
         }
         
         document.addEventListener('DOMContentLoaded', loadData);

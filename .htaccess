@@ -5,6 +5,10 @@ Options -Indexes
 </FilesMatch>
 
 RewriteEngine On
-RewriteBase /library-pro/
+RewriteBase /the-robboeb-library/
 
-ErrorDocument 404 /library-pro/public/404.php
+# Redirect root to home page
+RewriteRule ^$ /the-robboeb-library/public/home.php [L]
+RewriteRule ^index\.php$ /the-robboeb-library/public/home.php [L]
+
+ErrorDocument 404 /the-robboeb-library/public/404.php

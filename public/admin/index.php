@@ -29,22 +29,17 @@ $recent_activity = DatabaseHelper::getRecentActivity(5);
                 <div class="top-bar-left">
                     <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
                 </div>
-                <div class="top-bar-right">
-                    <div class="user-info">
-                        <div class="user-avatar"><?php echo strtoupper(substr($currentUser['first_name'], 0, 1)); ?></div>
-                        <div class="user-details">
-                            <span class="user-name"><?php echo htmlspecialchars($currentUser['first_name'] . ' ' . $currentUser['last_name']); ?></span>
-                            <span class="user-role">Administrator</span>
-                        </div>
-                    </div>
-                    <button onclick="logout()" class="btn btn-logout">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
-                </div>
             </header>
             
             <div class="content-area">
                 <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"><i class="fas fa-hourglass-half"></i></div>
+                        <div class="stat-info">
+                            <h3><?php echo $stats['pending_requests'] ?? 0; ?></h3>
+                            <p>Pending Requests</p>
+                        </div>
+                    </div>
                     <div class="stat-card">
                         <div class="stat-icon"><i class="fas fa-book"></i></div>
                         <div class="stat-info">
@@ -120,13 +115,5 @@ $recent_activity = DatabaseHelper::getRecentActivity(5);
     </div>
     
     <script src="<?php echo BASE_URL; ?>/public/assets/js/sidebar.js"></script>
-    <script>
-        function logout() {
-            window.location.href = '<?php echo BASE_URL; ?>/api/auth/logout';
-            setTimeout(() => {
-                window.location.href = '<?php echo BASE_URL; ?>/public/login.php';
-            }, 100);
-        }
-    </script>
 </body>
 </html>

@@ -18,7 +18,7 @@ if (AuthService::isAuthenticated()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - THE ROBBOEB LIBRARY</title>
+    <title>Login - KH LIBRARY</title>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -28,7 +28,7 @@ if (AuthService::isAuthenticated()) {
             <div class="login-logo">
                 <img src="<?php echo BASE_URL; ?>/public/assets/brand/symbol.svg" alt="THE ROBBOEB LIBRARY" class="brand-logo-large">
             </div>
-            <h1>THE ROBBOEB LIBRARY</h1>
+            <h1>KH LIBRARY</h1>
             <h2>Library Management System</h2>
             
             <div id="message" class="message" style="display:none;"></div>
@@ -104,7 +104,7 @@ if (AuthService::isAuthenticated()) {
             
             <div class="demo-credentials">
                 <p><strong><i class="fas fa-info-circle"></i> Demo Credentials:</strong></p>
-                <p><i class="fas fa-user-shield"></i> Admin: admin@libra.com / password</p>
+                <p><i class="fas fa-user-shield"></i> Admin: admin@library.com / password</p>
                 <p><i class="fas fa-user"></i> User: john.doe@email.com / password</p>
             </div>
             

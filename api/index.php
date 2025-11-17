@@ -18,7 +18,7 @@ header('Content-Type: application/json');
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 $requestUri = $_SERVER['REQUEST_URI'];
 
-$basePath = '/library-pro/api';
+$basePath = '/the-robboeb-library/api';
 $path = str_replace($basePath, '', parse_url($requestUri, PHP_URL_PATH));
 $path = trim($path, '/');
 
@@ -42,7 +42,7 @@ try {
                 $controller->login();
             } elseif ($id === 'register' && $requestMethod === 'POST') {
                 $controller->register();
-            } elseif ($id === 'logout' && $requestMethod === 'POST') {
+            } elseif ($id === 'logout' && ($requestMethod === 'POST' || $requestMethod === 'GET')) {
                 $controller->logout();
             } elseif ($id === 'current' && $requestMethod === 'GET') {
                 $controller->getCurrentUser();
@@ -101,11 +101,22 @@ try {
             } elseif ($requestMethod === 'GET' && $id === 'overdue') {
                 AuthMiddleware::handle(true);
                 $controller->findOverdue();
+            } elseif ($requestMethod === 'GET' && $id === 'pending') {
+                AuthMiddleware::handle(true);
+                $controller->findPending();
             } elseif ($requestMethod === 'GET' && $id) {
                 $controller->show($id);
             } elseif ($requestMethod === 'POST' && $id === 'checkout') {
                 AuthMiddleware::handle(true);
                 $controller->checkout();
+            } elseif ($requestMethod === 'POST' && $id === 'request') {
+                $controller->requestBorrow();
+            } elseif ($requestMethod === 'POST' && $id && $action === 'approve') {
+                AuthMiddleware::handle(true);
+                $controller->approveLoan($id);
+            } elseif ($requestMethod === 'POST' && $id && $action === 'reject') {
+                AuthMiddleware::handle(true);
+                $controller->rejectLoan($id);
             } elseif ($requestMethod === 'POST' && $id && $action === 'return') {
                 AuthMiddleware::handle(true);
                 $controller->returnBook($id);

@@ -29,8 +29,9 @@ class DatabaseHelper {
             SELECT 
                 (SELECT COUNT(*) FROM books) as total_books,
                 (SELECT SUM(available_quantity) FROM books) as available_books,
-                (SELECT COUNT(*) FROM loans WHERE return_date IS NULL) as active_loans,
-                (SELECT COUNT(*) FROM loans WHERE return_date IS NULL AND due_date < CURDATE()) as overdue_loans,
+                (SELECT COUNT(*) FROM loans WHERE status = 'active') as active_loans,
+                (SELECT COUNT(*) FROM loans WHERE status = 'pending') as pending_requests,
+                (SELECT COUNT(*) FROM loans WHERE status = 'active' AND due_date < CURDATE()) as overdue_loans,
                 (SELECT COUNT(*) FROM users) as total_users,
                 (SELECT COUNT(*) FROM categories) as total_categories,
                 (SELECT COUNT(*) FROM authors) as total_authors

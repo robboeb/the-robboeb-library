@@ -41,9 +41,9 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         if (response.success) {
             const userType = response.data.user.user_type;
             if (userType === 'admin') {
-                window.location.href = '/library-pro/public/admin/index.php';
+                window.location.href = '/the-robboeb-library/public/admin/index.php';
             } else {
-                window.location.href = '/library-pro/public/user/index.php';
+                window.location.href = '/the-robboeb-library/public/user/index.php';
             }
         }
     } catch (error) {
@@ -69,7 +69,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
         if (response.success) {
             showMessage('Registration successful! Redirecting...', 'success');
             setTimeout(() => {
-                window.location.href = '/library-pro/public/user/index.php';
+                window.location.href = '/the-robboeb-library/public/user/index.php';
             }, 1500);
         }
     } catch (error) {

@@ -28,6 +28,15 @@ const Utils = {
         return d.toLocaleDateString();
     },
     
+    // Format date and time
+    formatDateTime(datetime) {
+        const d = new Date(datetime);
+        return `${d.toLocaleDateString()} ${d.toLocaleTimeString('en-US', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        })}`;
+    },
+    
     // Format relative time
     formatRelativeTime(date) {
         const now = new Date();

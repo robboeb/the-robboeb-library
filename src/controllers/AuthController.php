@@ -71,7 +71,12 @@ class AuthController {
     public function logout() {
         try {
             AuthService::destroySession();
-            $this->sendResponse(['message' => 'Logout successful'], 200);
+            
+            // Send response with redirect instruction
+            $this->sendResponse([
+                'message' => 'Logout successful',
+                'redirect' => '/the-robboeb-library/public/home.php'
+            ], 200);
         } catch (Exception $e) {
             $this->sendError('Logout failed', 500, 'SERVER_ERROR');
         }

@@ -1,7 +1,7 @@
 <?php
-define('APP_NAME', 'THE ROBBOEB LIBRARY');
+define('APP_NAME', 'KH LIBRARY');
 define('APP_VERSION', '1.0.0');
-define('BASE_URL', '/library-pro');
+define('BASE_URL', '/the-robboeb-library');
 define('API_BASE_URL', BASE_URL . '/api');
 define('SESSION_TIMEOUT', 1800);
 define('SESSION_NAME', 'libra_session');
