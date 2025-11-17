@@ -1,8 +1,43 @@
 let searchQuery = '';
 
+// Fallback toast notification if UIComponents is not available
+function showToast(message, type = 'success') {
+    if (typeof UIComponents !== 'undefined' && UIComponents.showToast) {
+        UIComponents.showToast(message, type);
+    } else {
+        // Simple fallback toast
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            background: ${type === 'success' ? '#10b981' : '#ef4444'};
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10000;
+            font-size: 14px;
+            font-weight: 500;
+        `;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.3s';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+}
+
 async function loadUsers() {
     const tbody = document.getElementById('usersTableBody');
-    tbody.innerHTML = '<tr><td colspan="7" class="loading"><i class="fas fa-spinner fa-spin"></i> Loading users...</td></tr>';
+    tbody.innerHTML = `<tr><td colspan="7" class="loading-cell">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Loading users...</span>
+        </div>
+    </td></tr>`;
     
     try {
         const params = {};
@@ -13,7 +48,7 @@ async function loadUsers() {
         if (response.success && response.data.length > 0) {
             tbody.innerHTML = response.data.map(user => `
                 <tr>
-                    <td>${user.user_id}</td>
+                    <td><strong>#${user.user_id}</strong></td>
                     <td><strong>${Utils.escapeHtml(user.first_name + ' ' + user.last_name)}</strong></td>
                     <td>${Utils.escapeHtml(user.email)}</td>
                     <td>${Utils.escapeHtml(user.phone || 'N/A')}</td>
@@ -30,21 +65,27 @@ async function loadUsers() {
                 </tr>
             `).join('');
         } else {
-            tbody.innerHTML = '<tr><td colspan="7" class="empty">No users found</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" class="empty-cell">No users found</td></tr>';
         }
     } catch (error) {
         console.error('Error loading users:', error);
-        tbody.innerHTML = '<tr><td colspan="7" class="error">Failed to load users</td></tr>';
-        UIComponents.showToast('Failed to load users', 'error');
+        tbody.innerHTML = '<tr><td colspan="7" class="empty-cell" style="color: var(--error-600);">Failed to load users</td></tr>';
+        showToast('Failed to load users', 'error');
     }
 }
 
-function showAddUserModal() {
-    document.getElementById('modalTitle').textContent = 'Add New User';
+function showCreateUserModal() {
+    document.getElementById('modalTitle').innerHTML = '<i class="fas fa-user-plus"></i> Create New User';
+    document.getElementById('submitBtnText').textContent = 'Create User';
     document.getElementById('userForm').reset();
     document.getElementById('userId').value = '';
     document.getElementById('password').required = true;
+    document.getElementById('passwordHint').textContent = 'Required for new users';
     document.getElementById('userModal').style.display = 'flex';
+}
+
+function showAddUserModal() {
+    showCreateUserModal();
 }
 
 function closeUserModal() {
@@ -56,7 +97,8 @@ async function editUser(id) {
         const response = await API.users.getById(id);
         if (response.success) {
             const user = response.data;
-            document.getElementById('modalTitle').textContent = 'Edit User';
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-user-edit"></i> Edit User';
+            document.getElementById('submitBtnText').textContent = 'Update User';
             document.getElementById('userId').value = user.user_id;
             document.getElementById('firstName').value = user.first_name;
             document.getElementById('lastName').value = user.last_name;
@@ -67,10 +109,11 @@ async function editUser(id) {
             document.getElementById('status').value = user.status;
             document.getElementById('password').required = false;
             document.getElementById('password').value = '';
+            document.getElementById('passwordHint').textContent = 'Leave blank to keep current password';
             document.getElementById('userModal').style.display = 'flex';
         }
     } catch (error) {
-        UIComponents.showToast('Failed to load user details', 'error');
+        showToast('Failed to load user details', 'error');
     }
 }
 
@@ -84,17 +127,22 @@ async function deleteUser(id, name) {
         try {
             const response = await API.users.delete(id);
             if (response.success) {
-                UIComponents.showToast('User deleted successfully', 'success');
+                showToast('User deleted successfully', 'success');
                 loadUsers();
             }
         } catch (error) {
-            UIComponents.showToast(error.error?.message || 'Failed to delete user', 'error');
+            showToast(error.error?.message || 'Failed to delete user', 'error');
         }
     }
 }
 
 document.getElementById('userForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+    
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
     
     const userId = document.getElementById('userId').value;
     const userData = {
@@ -120,13 +168,25 @@ document.getElementById('userForm').addEventListener('submit', async (e) => {
             response = await API.users.create(userData);
         }
         
+        console.log('User save response:', response);
+        
         if (response.success) {
-            UIComponents.showToast(userId ? 'User updated successfully' : 'User added successfully', 'success');
+            const message = userId ? 'User updated successfully' : 'User created successfully';
+            showToast(message, 'success');
             closeUserModal();
-            loadUsers();
+            // Reload users after a short delay to ensure database is updated
+            setTimeout(() => {
+                loadUsers();
+            }, 300);
+        } else {
+            throw new Error(response.error?.message || 'Failed to save user');
         }
     } catch (error) {
-        UIComponents.showToast(error.error?.message || 'Failed to save user', 'error');
+        console.error('Error saving user:', error);
+        const errorMsg = error.error?.message || error.message || 'Failed to save user';
+        showToast(errorMsg, 'error');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
     }
 });
 

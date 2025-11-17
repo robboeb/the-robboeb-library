@@ -1,4 +1,54 @@
 RewriteEngine On
+
+# Route /api/loans to index.php
+RewriteRule ^loans/?$ loans/index.php [L]
+
+# Route /api/loans/pending
+RewriteRule ^loans/pending/?$ loans/pending.php [L]
+
+# Route /api/loans/{id}/approve
+RewriteRule ^loans/([0-9]+)/approve/?$ loans/approve.php [L]
+
+# Route /api/loans/{id}/reject
+RewriteRule ^loans/([0-9]+)/reject/?$ loans/reject.php [L]
+
+# Route /api/loans/return
+RewriteRule ^loans/return/?$ loans/return.php [L]
+
+# Route /api/users (GET) to index.php
+RewriteCond %{REQUEST_METHOD} GET
+RewriteRule ^users/?$ users/index.php [L]
+
+# Route /api/users (POST) to create.php
+RewriteCond %{REQUEST_METHOD} POST
+RewriteRule ^users/?$ users/create.php [L]
+
+# Route /api/users/{id} (GET) to get.php
+RewriteCond %{REQUEST_METHOD} GET
+RewriteRule ^users/([0-9]+)/?$ users/get.php [L]
+
+# Route /api/users/{id} (PUT/POST) to update.php
+RewriteCond %{REQUEST_METHOD} PUT [OR]
+RewriteCond %{REQUEST_METHOD} POST
+RewriteRule ^users/([0-9]+)/?$ users/update.php [L]
+
+# Route /api/users/{id} (DELETE) to delete.php
+RewriteCond %{REQUEST_METHOD} DELETE
+RewriteRule ^users/([0-9]+)/?$ users/delete.php [L]
+
+# Route /api/reports/dashboard
+RewriteRule ^reports/dashboard/?$ reports/dashboard.php [L]
+
+# Route /api/reports/popular-books
+RewriteRule ^reports/popular-books/?$ reports/popular-books.php [L]
+
+# Route /api/reports/active-users
+RewriteRule ^reports/active-users/?$ reports/active-users.php [L]
+
+# Route /api/reports/categories
+RewriteRule ^reports/categories/?$ reports/categories.php [L]
+
+# Default fallback
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php [QSA,L]

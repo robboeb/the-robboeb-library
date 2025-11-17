@@ -51,6 +51,21 @@ foreach ($active_loans as $loan) {
     <title>My Dashboard - KH LIBRARY</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/main.css">
+    <style>
+        .btn-return:hover {
+            background: #667eea !important;
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+        .btn-return:active {
+            transform: translateY(0);
+        }
+        .btn-return:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -234,6 +249,15 @@ foreach ($active_loans as $loan) {
                                     </p>
                                 </div>
                                 <?php endif; ?>
+                                
+                                <!-- Return Book Button -->
+                                <div style="margin-top: 15px; text-align: right;">
+                                    <button onclick="returnBook(<?php echo $loan['loan_id']; ?>, '<?php echo htmlspecialchars(addslashes($loan['title'])); ?>')" 
+                                            class="btn btn-outline btn-return" 
+                                            style="background: white; color: #667eea; border: 2px solid #667eea; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                                        <i class="fas fa-undo"></i> Return Book
+                                    </button>
+                                </div>
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -294,6 +318,41 @@ foreach ($active_loans as $loan) {
                 window.location.href = '<?php echo BASE_URL; ?>/public/home.php';
             }).catch(() => {
                 window.location.href = '<?php echo BASE_URL; ?>/public/home.php';
+            });
+        }
+    }
+    
+    function returnBook(loanId, bookTitle) {
+        if (confirm(`Are you sure you want to return "${bookTitle}"?\n\nThis action cannot be undone.`)) {
+            // Disable the button to prevent double clicks
+            event.target.disabled = true;
+            event.target.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Returning...';
+            
+            fetch('<?php echo BASE_URL; ?>/api/loans/return.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify({ loan_id: loanId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`✓ "${data.book_title}" has been returned successfully!`);
+                    // Reload the page to update the dashboard
+                    window.location.reload();
+                } else {
+                    alert('Error: ' + data.message);
+                    event.target.disabled = false;
+                    event.target.innerHTML = '<i class="fas fa-undo"></i> Return Book';
+                }
+            })
+            .catch(error => {
+                alert('Failed to return book. Please try again.');
+                console.error('Error:', error);
+                event.target.disabled = false;
+                event.target.innerHTML = '<i class="fas fa-undo"></i> Return Book';
             });
         }
     }

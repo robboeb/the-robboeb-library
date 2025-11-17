@@ -33,13 +33,13 @@ if (AuthService::isAuthenticated()) {
             
             <div id="message" class="message" style="display:none;"></div>
             
-            <div class="tabs">
-                <button class="tab-btn active" onclick="showTab('login')">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-                <button class="tab-btn" onclick="showTab('register')">
-                    <i class="fas fa-user-plus"></i> Register
-                </button>
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h3 style="color: var(--gray-700); font-size: 18px; font-weight: 600;">
+                    <i class="fas fa-sign-in-alt"></i> Sign In to Your Account
+                </h3>
+                <p style="color: var(--gray-600); font-size: 14px; margin-top: 8px;">
+                    Contact administrator to create an account
+                </p>
             </div>
             
             <form id="loginForm" class="auth-form">
@@ -57,48 +57,6 @@ if (AuthService::isAuthenticated()) {
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">
                     <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-            </form>
-            
-            <form id="registerForm" class="auth-form" style="display:none;">
-                <div class="form-group">
-                    <label for="reg-email" class="form-label">
-                        <i class="fas fa-envelope"></i> Email
-                    </label>
-                    <input type="email" id="reg-email" name="email" class="form-input" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-password" class="form-label">
-                        <i class="fas fa-lock"></i> Password
-                    </label>
-                    <input type="password" id="reg-password" name="password" class="form-input" required minlength="8">
-                </div>
-                <div class="form-group">
-                    <label for="reg-first-name" class="form-label">
-                        <i class="fas fa-user"></i> First Name
-                    </label>
-                    <input type="text" id="reg-first-name" name="first_name" class="form-input" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-last-name" class="form-label">
-                        <i class="fas fa-user"></i> Last Name
-                    </label>
-                    <input type="text" id="reg-last-name" name="last_name" class="form-input" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-phone" class="form-label">
-                        <i class="fas fa-phone"></i> Phone
-                    </label>
-                    <input type="tel" id="reg-phone" name="phone" class="form-input">
-                </div>
-                <div class="form-group">
-                    <label for="reg-address" class="form-label">
-                        <i class="fas fa-map-marker-alt"></i> Address
-                    </label>
-                    <textarea id="reg-address" name="address" class="form-textarea" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                    <i class="fas fa-user-plus"></i> Register
                 </button>
             </form>
             

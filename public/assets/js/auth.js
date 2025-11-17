@@ -1,21 +1,4 @@
-function showTab(tab) {
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    const tabs = document.querySelectorAll('.tab-btn');
-    
-    tabs.forEach(btn => btn.classList.remove('active'));
-    
-    if (tab === 'login') {
-        loginForm.style.display = 'block';
-        registerForm.style.display = 'none';
-        tabs[0].classList.add('active');
-    } else {
-        loginForm.style.display = 'none';
-        registerForm.style.display = 'block';
-        tabs[1].classList.add('active');
-    }
-    hideMessage();
-}
+// Registration removed - only admins can create accounts
 
 function showMessage(message, type = 'error') {
     const messageDiv = document.getElementById('message');
@@ -51,31 +34,4 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     }
 });
 
-document.getElementById('registerForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    hideMessage();
-    
-    const formData = {
-        email: document.getElementById('reg-email').value,
-        password: document.getElementById('reg-password').value,
-        first_name: document.getElementById('reg-first-name').value,
-        last_name: document.getElementById('reg-last-name').value,
-        phone: document.getElementById('reg-phone').value,
-        address: document.getElementById('reg-address').value
-    };
-    
-    try {
-        const response = await API.auth.register(formData);
-        if (response.success) {
-            showMessage('Registration successful! Redirecting...', 'success');
-            setTimeout(() => {
-                window.location.href = '/the-robboeb-library/public/user/index.php';
-            }, 1500);
-        }
-    } catch (error) {
-        const errorMsg = error.error?.details 
-            ? Object.values(error.error.details).join(', ')
-            : error.error?.message || 'Registration failed';
-        showMessage(errorMsg, 'error');
-    }
-});
+// Public registration disabled - contact administrator to create an account
