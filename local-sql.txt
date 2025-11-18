@@ -1,26 +1,3 @@
-OFFICIAL LOGO:
-https://s3.ca-central-1.amazonaws.com/logojoy/logos/231703335/symbol.svg?1537014.9000000358
-
-This logo is used across all pages of the application.
-
-
-my Color Palette
-
-These are based on your logo colors.
-
-#ff5722
-
-#eeeeee
-
-#111111
-
-#ff7e55
-
-#ee3900
-
-#ffffff 
-
-
 COVER 
 from https://books.scholarlibrary.com/shop?brand=1432
 https://books.scholarlibrary.com/web/image/product.template/18725/image_512/%E1%9E%94%E1%9E%BB%E1%9E%82%E1%9F%92%E1%9E%82%E1%9E%9B%E1%9E%82%E1%9F%86%E1%9E%9A%E1%9E%BC%E1%9E%9F%E1%9E%B6%E1%9E%84%E1%9E%97%E1%9E%B6%E1%9E%96%E1%9E%92%E1%9F%86%E1%9E%92%E1%9F%81%E1%9E%84%E1%9E%8A%E1%9F%84%E1%9E%99%E1%9E%A2%E1%9F%86%E1%9E%96%E1%9E%BE%E1%9E%9B%E1%9F%92%E1%9E%A2?unique=0296154
@@ -42,3 +19,8 @@ https://books.scholarlibrary.com/web/image/product.template/18736/image_512/%E1%
 https://books.scholarlibrary.com/web/image/product.template/18733/image_512/%E1%9E%9A%E1%9E%B6%E1%9E%94%E1%9F%8B%E1%9E%98%E1%9E%BD%E1%9E%99%E1%9E%9F%E1%9E%B6%E1%9E%87%E1%9E%B6%E1%9E%90%E1%9F%92%E1%9E%98%E1%9E%B8?unique=0296154
 https://books.scholarlibrary.com/web/image/product.template/18734/image_512/%E1%9E%92%E1%9F%92%E1%9E%9C%E1%9E%BE%E1%9E%85%E1%9E%B7%E1%9E%8F%E1%9F%92%E1%9E%8F%E1%9E%B2%E1%9F%92%E1%9E%99%E1%9E%8F%E1%9F%92%E1%9E%9A%E1%9E%87%E1%9E%B6%E1%9E%80%E1%9F%8B?unique=0296154
 https://books.scholarlibrary.com/web/image/product.template/18735/image_512/%E1%9E%9C%E1%9E%B7%E1%9E%92%E1%9E%B8%E1%9E%A2%E1%9E%B6%E1%9E%93%E1%9E%85%E1%9E%B7%E1%9E%8F%E1%9F%92%E1%9E%8F%E1%9E%A2%E1%9F%92%E1%9E%93%E1%9E%80%E1%9E%93%E1%9F%85%E1%9E%80%E1%9F%92%E1%9E%94%E1%9F%82%E1%9E%9A%E1%9E%81%E1%9F%92%E1%9E%9B%E1%9E%BD%E1%9E%93?unique=0296154
+
+
+
+
+please write readme md file all in one place and all details struycture on this project and focus on use diafgram mermaid explain entity and structure first guide with web app flow wokring and go to api backend how api working 

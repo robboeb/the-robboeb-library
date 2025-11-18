@@ -2,6 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+require_once __DIR__ . '/../config/constants.php';
 require_once __DIR__ . '/../src/middleware/CorsMiddleware.php';
 require_once __DIR__ . '/../src/middleware/AuthMiddleware.php';
 require_once __DIR__ . '/../src/controllers/AuthController.php';
@@ -10,6 +11,16 @@ require_once __DIR__ . '/../src/controllers/UserController.php';
 require_once __DIR__ . '/../src/controllers/LoanController.php';
 require_once __DIR__ . '/../src/controllers/CategoryController.php';
 require_once __DIR__ . '/../src/controllers/AuthorController.php';
+
+// Initialize session first for authentication
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'httponly' => true,
+    'samesite' => 'Lax'
+]);
+session_name(SESSION_NAME);
+session_start();
 
 CorsMiddleware::handle();
 

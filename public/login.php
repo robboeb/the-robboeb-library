@@ -28,7 +28,8 @@ if (AuthService::isAuthenticated()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - KH LIBRARY</title>
+    <title>Login - KHLIBRARY</title>
+    <link rel="icon" type="image/svg+xml" href="https://s3.ca-central-1.amazonaws.com/logojoy/logos/231703335/symbol.svg?1537014.9000000358">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -438,8 +439,8 @@ if (AuthService::isAuthenticated()) {
                     <i class="fas fa-sign-in-alt"></i> Login
                 </button>
                 
-                <a href="<?php echo BASE_URL; ?>/public/home.php" class="modern-btn-home">
-                    <i class="fas fa-home"></i> Back to Home
+                <a href="<?php echo BASE_URL; ?>/public/browse.php" class="modern-btn-home">
+                    <i class="fas fa-book"></i> Browse Books
                 </a>
             </form>
         </div>

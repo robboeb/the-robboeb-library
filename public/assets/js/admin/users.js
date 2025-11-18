@@ -243,7 +243,7 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
 
 function logout() {
     API.auth.logout().then(() => {
-        window.location.href = '/the-robboeb-library/public/home.php';
+        window.location.href = '/the-robboeb-library/public/browse.php';
     });
 }
 

@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__DIR__) . '/models/Loan.php';
+require_once dirname(__DIR__) . '/services/AuthService.php';
 
 class LoanController {
     private $loanModel;
@@ -10,6 +11,9 @@ class LoanController {
 
     public function index() {
         try {
+            // Get current user for filtering
+            $currentUser = AuthService::getCurrentUser();
+            
             $limit = $_GET['limit'] ?? 1000;
             $offset = $_GET['offset'] ?? 0;
             $userId = $_GET['user_id'] ?? null;
@@ -27,16 +31,25 @@ class LoanController {
                     INNER JOIN books b ON l.book_id = b.book_id
                     INNER JOIN users u ON l.user_id = u.user_id";
             
-            if ($userId) {
+            // Patron users can only see their own loans
+            if ($currentUser && $currentUser['user_type'] === 'patron') {
+                $sql .= " WHERE l.user_id = :current_user_id";
+                $userId = $currentUser['user_id']; // Override any provided user_id
+            } elseif ($userId) {
+                // Admin users can filter by user_id if provided
                 $sql .= " WHERE l.user_id = :user_id";
             }
             
             $sql .= " ORDER BY l.loan_date DESC LIMIT :limit OFFSET :offset";
             
             $stmt = $this->loanModel->db->prepare($sql);
-            if ($userId) {
+            
+            if ($currentUser && $currentUser['user_type'] === 'patron') {
+                $stmt->bindValue(':current_user_id', $currentUser['user_id'], PDO::PARAM_INT);
+            } elseif ($userId) {
                 $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
             }
+            
             $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
             $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
             $stmt->execute();
@@ -57,10 +70,19 @@ class LoanController {
 
     public function show($id) {
         try {
+            // Get current user for ownership verification
+            $currentUser = AuthService::getCurrentUser();
+            
             $loan = $this->loanModel->findById($id);
             
             if (!$loan) {
                 $this->sendError('Loan not found', 404, 'NOT_FOUND');
+                return;
+            }
+
+            // Patron users can only view their own loans
+            if ($currentUser && $currentUser['user_type'] === 'patron' && $loan['user_id'] != $currentUser['user_id']) {
+                $this->sendError('You can only view your own loans', 403, 'PERMISSION_DENIED');
                 return;
             }
 

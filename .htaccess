@@ -7,8 +7,8 @@ Options -Indexes
 RewriteEngine On
 RewriteBase /the-robboeb-library/
 
-# Redirect root to home page
-RewriteRule ^$ /the-robboeb-library/public/home.php [L]
-RewriteRule ^index\.php$ /the-robboeb-library/public/home.php [L]
+# Redirect root to browse page
+RewriteRule ^$ /the-robboeb-library/public/browse.php [L]
+RewriteRule ^index\.php$ /the-robboeb-library/public/browse.php [L]
 
 ErrorDocument 404 /the-robboeb-library/public/404.php

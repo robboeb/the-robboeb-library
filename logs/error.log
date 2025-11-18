@@ -1,2 +1,26 @@
 [2025-11-16 12:34:00] Model Error (books): SQLSTATE[HY093]: Invalid parameter number
 [2025-11-17 14:44:57] Model Error (loans): Failed to create loan: {"success":false,"errors":{"checkout_date":"Checkout date is required","due_date":"Due date is required"}}
+[18-Nov-2025 07:54:23 Europe/Berlin] PHP Fatal error:  Uncaught Error: Cannot access protected property Book::$db in C:\xampp\htdocs\the-robboeb-library\api\v1\controllers\ApiBookController.php:99
+Stack trace:
+#0 C:\xampp\htdocs\the-robboeb-library\api\v1\controllers\ApiBookController.php(20): ApiBookController->index()
+#1 C:\xampp\htdocs\the-robboeb-library\api\v1\index.php(104): ApiBookController->route('GET', NULL, NULL)
+#2 {main}
+  thrown in C:\xampp\htdocs\the-robboeb-library\api\v1\controllers\ApiBookController.php on line 99
+[18-Nov-2025 08:37:23 Europe/Berlin] PHP Fatal error:  Uncaught Error: Cannot access protected property Book::$db in C:\xampp\htdocs\the-robboeb-library\api\v1\controllers\ApiBookController.php:99
+Stack trace:
+#0 C:\xampp\htdocs\the-robboeb-library\api\v1\controllers\ApiBookController.php(20): ApiBookController->index()
+#1 C:\xampp\htdocs\the-robboeb-library\api\v1\index.php(104): ApiBookController->route('GET', NULL, NULL)
+#2 {main}
+  thrown in C:\xampp\htdocs\the-robboeb-library\api\v1\controllers\ApiBookController.php on line 99
+[18-Nov-2025 11:19:33 Europe/Berlin] PHP Fatal error:  Uncaught Error: Cannot access protected property Book::$db in C:\xampp\htdocs\the-robboeb-library\api\v1\controllers\ApiBookController.php:99
+Stack trace:
+#0 C:\xampp\htdocs\the-robboeb-library\api\v1\controllers\ApiBookController.php(20): ApiBookController->index()
+#1 C:\xampp\htdocs\the-robboeb-library\api\v1\index.php(104): ApiBookController->route('GET', NULL, NULL)
+#2 {main}
+  thrown in C:\xampp\htdocs\the-robboeb-library\api\v1\controllers\ApiBookController.php on line 99
+[18-Nov-2025 11:19:52 Europe/Berlin] PHP Fatal error:  Uncaught Error: Cannot access protected property Book::$db in C:\xampp\htdocs\the-robboeb-library\api\v1\controllers\ApiBookController.php:99
+Stack trace:
+#0 C:\xampp\htdocs\the-robboeb-library\api\v1\controllers\ApiBookController.php(20): ApiBookController->index()
+#1 C:\xampp\htdocs\the-robboeb-library\api\v1\index.php(104): ApiBookController->route('GET', NULL, NULL)
+#2 {main}
+  thrown in C:\xampp\htdocs\the-robboeb-library\api\v1\controllers\ApiBookController.php on line 99

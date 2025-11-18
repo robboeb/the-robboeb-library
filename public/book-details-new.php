@@ -39,9 +39,9 @@ if (!$book) {
 // Check if user has pending or active loan for this book
 $userLoanStatus = null;
 if ($currentUser) {
-    $loanSql = "SELECT status, due_date, checkout_date FROM loans 
+    $loanSql = "SELECT status, due_date, loan_date FROM loans 
                 WHERE user_id = :user_id AND book_id = :book_id 
-                AND status IN ('pending', 'active')
+                AND status IN ('pending', 'borrowed')
                 ORDER BY created_at DESC LIMIT 1";
     $loanStmt = $pdo->prepare($loanSql);
     $loanStmt->execute([':user_id' => $currentUser['user_id'], ':book_id' => $bookId]);

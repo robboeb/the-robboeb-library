@@ -75,7 +75,7 @@ class AuthController {
             // Send response with redirect instruction
             $this->sendResponse([
                 'message' => 'Logout successful',
-                'redirect' => '/the-robboeb-library/public/home.php'
+                'redirect' => '/the-robboeb-library/public/browse.php'
             ], 200);
         } catch (Exception $e) {
             $this->sendError('Logout failed', 500, 'SERVER_ERROR');

@@ -11,6 +11,7 @@ $currentUser = AuthService::getCurrentUser();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Authors - <?php echo APP_NAME; ?></title>
+    <link rel="icon" type="image/svg+xml" href="https://s3.ca-central-1.amazonaws.com/logojoy/logos/231703335/symbol.svg?1537014.9000000358">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/main.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/admin.css">
@@ -193,7 +194,7 @@ $currentUser = AuthService::getCurrentUser();
         });
         
         function logout() {
-            API.auth.logout().then(() => window.location.href = '/the-robboeb-library/public/home.php');
+            API.auth.logout().then(() => window.location.href = '/the-robboeb-library/public/browse.php');
         }
         
         document.addEventListener('DOMContentLoaded', loadData);

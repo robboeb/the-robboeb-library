@@ -39,9 +39,9 @@
         </a>
     </nav>
     <div class="sidebar-footer">
-        <a href="<?php echo BASE_URL; ?>/public/home.php" class="nav-item">
-            <i class="fas fa-home"></i>
-            <span>Public Site</span>
+        <a href="<?php echo BASE_URL; ?>/public/browse.php" class="nav-item">
+            <i class="fas fa-book"></i>
+            <span>Browse Books</span>
         </a>
         <button type="button" onclick="handleLogout(event)" class="nav-item logout-item" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer; font-family: inherit; font-size: inherit;">
             <i class="fas fa-sign-out-alt"></i>

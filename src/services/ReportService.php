@@ -161,7 +161,7 @@ class ReportService {
 
     public function getRecentActivity($limit = 10) {
         try {
-            $sql = "SELECT l.loan_id, l.checkout_date, l.return_date, l.status, 
+            $sql = "SELECT l.loan_id, l.loan_date, l.return_date, l.status, 
                     b.title as book_title, 
                     CONCAT(u.first_name, ' ', u.last_name) as user_name 
                     FROM loans l 

@@ -71,8 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function logout() {
     API.auth.logout().then(() => {
-        window.location.href = '/the-robboeb-library/public/home.php';
+        window.location.href = '/the-robboeb-library/public/browse.php';
     }).catch(() => {
-        window.location.href = '/the-robboeb-library/public/home.php';
+        window.location.href = '/the-robboeb-library/public/browse.php';
     });
 }

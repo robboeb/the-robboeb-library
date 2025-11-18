@@ -121,7 +121,6 @@ class DatabaseHelper {
             SELECT l.*, 
                    b.title as book_title, b.isbn,
                    CONCAT(u.first_name, ' ', u.last_name) as user_name, u.email as user_email,
-                   l.checkout_date as loan_date,
                    CASE 
                        WHEN l.return_date IS NOT NULL THEN 'returned'
                        WHEN l.due_date < CURDATE() THEN 'overdue'
@@ -130,7 +129,7 @@ class DatabaseHelper {
             FROM loans l
             INNER JOIN books b ON l.book_id = b.book_id
             INNER JOIN users u ON l.user_id = u.user_id
-            ORDER BY l.checkout_date DESC
+            ORDER BY l.loan_date DESC
             $limit_clause
         ");
         return $stmt->fetchAll();
@@ -214,13 +213,12 @@ class DatabaseHelper {
         $pdo = self::getConnection();
         $stmt = $pdo->prepare("
             SELECT l.*, 
-                   l.checkout_date as loan_date,
                    b.title as book_title,
                    CONCAT(u.first_name, ' ', u.last_name) as user_name
             FROM loans l
             INNER JOIN books b ON l.book_id = b.book_id
             INNER JOIN users u ON l.user_id = u.user_id
-            ORDER BY l.checkout_date DESC
+            ORDER BY l.loan_date DESC
             LIMIT :limit
         ");
         $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);

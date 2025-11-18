@@ -72,7 +72,7 @@ class Loan extends BaseModel {
                     FROM {$this->table} l 
                     INNER JOIN books b ON l.book_id = b.book_id 
                     WHERE l.user_id = :user_id 
-                    ORDER BY l.checkout_date DESC";
+                    ORDER BY l.loan_date DESC";
             
             if ($limit !== null) {
                 $sql .= " LIMIT :limit OFFSET :offset";
@@ -189,12 +189,12 @@ class Loan extends BaseModel {
 
             // Update loan to active
             $updateLoanSql = "UPDATE {$this->table} 
-                             SET status = 'active', 
-                                 checkout_date = :checkout_date,
+                             SET status = 'borrowed', 
+                                 loan_date = :loan_date,
                                  due_date = :due_date
                              WHERE loan_id = :loan_id";
             $updateLoanStmt = $this->db->prepare($updateLoanSql);
-            $updateLoanStmt->bindValue(':checkout_date', date('Y-m-d'));
+            $updateLoanStmt->bindValue(':loan_date', date('Y-m-d'));
             $updateLoanStmt->bindValue(':due_date', $dueDate);
             $updateLoanStmt->bindValue(':loan_id', $loanId, PDO::PARAM_INT);
             $updateLoanStmt->execute();
@@ -260,9 +260,9 @@ class Loan extends BaseModel {
             $loanData = [
                 'book_id' => $bookId,
                 'user_id' => $userId,
-                'checkout_date' => date('Y-m-d'),
+                'loan_date' => date('Y-m-d'),
                 'due_date' => $dueDate,
-                'status' => 'active'
+                'status' => 'borrowed'
             ];
 
             $result = $this->create($loanData);
@@ -370,20 +370,20 @@ class Loan extends BaseModel {
             $errors['user_id'] = 'User ID is required';
         }
 
-        // For pending requests, checkout_date and due_date are not required
+        // For pending requests, loan_date and due_date are not required
         // They will be set when admin approves the request
         $isPending = isset($data['status']) && $data['status'] === 'pending';
 
         if (!$isPending) {
-            // For active loans, checkout_date and due_date are required
-            if (empty($data['checkout_date'])) {
-                $errors['checkout_date'] = 'Checkout date is required';
+            // For borrowed loans, loan_date and due_date are required
+            if (empty($data['loan_date'])) {
+                $errors['loan_date'] = 'Loan date is required';
             }
 
             if (empty($data['due_date'])) {
                 $errors['due_date'] = 'Due date is required';
-            } elseif (!empty($data['checkout_date']) && strtotime($data['due_date']) < strtotime($data['checkout_date'])) {
-                $errors['due_date'] = 'Due date must be after checkout date';
+            } elseif (!empty($data['loan_date']) && strtotime($data['due_date']) < strtotime($data['loan_date'])) {
+                $errors['due_date'] = 'Due date must be after loan date';
             }
         }
 

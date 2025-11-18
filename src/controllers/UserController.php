@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__DIR__) . '/models/User.php';
+require_once dirname(__DIR__) . '/services/AuthService.php';
 
 class UserController {
     private $userModel;
@@ -35,6 +36,15 @@ class UserController {
 
     public function show($id) {
         try {
+            // Get current user for ownership verification
+            $currentUser = AuthService::getCurrentUser();
+            
+            // Patron users can only view their own profile
+            if ($currentUser && $currentUser['user_type'] === 'patron' && $id != $currentUser['user_id']) {
+                $this->sendError('You can only view your own profile', 403, 'PERMISSION_DENIED');
+                return;
+            }
+            
             $user = $this->userModel->findById($id);
             
             if (!$user) {
@@ -67,7 +77,23 @@ class UserController {
 
     public function update($id) {
         try {
+            // Get current user for ownership verification
+            $currentUser = AuthService::getCurrentUser();
+            
+            // Patron users can only update their own profile
+            if ($currentUser && $currentUser['user_type'] === 'patron' && $id != $currentUser['user_id']) {
+                $this->sendError('You can only update your own profile', 403, 'PERMISSION_DENIED');
+                return;
+            }
+            
             $data = json_decode(file_get_contents('php://input'), true);
+            
+            // Patron users cannot change their user_type
+            if ($currentUser && $currentUser['user_type'] === 'patron' && isset($data['user_type'])) {
+                unset($data['user_type']);
+            }
+            
+            // Remove password from update data (use separate endpoint for password changes)
             unset($data['password']);
             
             $result = $this->userModel->update($id, $data);

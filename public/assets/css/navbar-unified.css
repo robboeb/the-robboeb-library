@@ -1,0 +1,150 @@
+/* Unified Navbar Styles - Consistent across all pages */
+
+.public-nav {
+    background: white;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.nav-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    padding: 0 24px;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #ff5722;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.nav-brand:hover {
+    color: #ff5722;
+}
+
+.brand-logo {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+    background: #f3f4f6;
+    color: #ff5722;
+}
+
+.nav-link.active {
+    color: #ff5722;
+    background: #fff5f2;
+}
+
+.nav-link i {
+    font-size: 14px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: #ff5722;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #ee3900;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 87, 34, 0.3);
+}
+
+.btn-outline {
+    background: transparent;
+    color: #ff5722;
+    border: 1.5px solid #ff5722;
+}
+
+.btn-outline:hover {
+    background: #ff5722;
+    color: white;
+}
+
+.mobile-menu-toggle {
+    display: none;
+    padding: 8px;
+    font-size: 20px;
+    color: #374151;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    .nav-links {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        padding: 16px;
+        border-bottom: 1px solid #e5e7eb;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        display: none;
+        gap: 8px;
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+    
+    .nav-link,
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

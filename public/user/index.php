@@ -38,7 +38,7 @@ $pending_requests = $pending_stmt->fetchAll(PDO::FETCH_ASSOC);
 // Get returned books history (last 10)
 $returned_sql = "SELECT l.*, b.title, b.isbn, b.cover_image,
                  CONCAT(a.first_name, ' ', a.last_name) as author_name,
-                 DATEDIFF(l.return_date, l.checkout_date) as days_borrowed
+                 DATEDIFF(l.return_date, l.loan_date) as days_borrowed
                  FROM loans l
                  JOIN books b ON l.book_id = b.book_id
                  LEFT JOIN book_authors ba ON b.book_id = ba.book_id
@@ -63,7 +63,8 @@ foreach ($active_loans as $loan) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile - KH LIBRARY</title>
+    <title>My Profile - KHLIBRARY</title>
+    <link rel="icon" type="image/svg+xml" href="https://s3.ca-central-1.amazonaws.com/logojoy/logos/231703335/symbol.svg?1537014.9000000358">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/public/assets/css/main.css">
     <style>
@@ -92,9 +93,6 @@ foreach ($active_loans as $loan) {
                     <span>KH LIBRARY</span>
                 </div>
                 <div class="nav-links">
-                    <a href="<?php echo BASE_URL; ?>/public/home.php" class="nav-link">
-                        <i class="fas fa-home"></i> Home
-                    </a>
                     <a href="<?php echo BASE_URL; ?>/public/browse.php" class="nav-link">
                         <i class="fas fa-book"></i> Browse Books
                     </a>
@@ -349,7 +347,7 @@ foreach ($active_loans as $loan) {
                                             </div>
                                         </td>
                                         <td style="padding: 16px; color: #2d3748;">
-                                            <?php echo date('M d, Y', strtotime($book['checkout_date'])); ?>
+                                            <?php echo date('M d, Y', strtotime($book['loan_date'])); ?>
                                         </td>
                                         <td style="padding: 16px; color: #2d3748;">
                                             <?php echo date('M d, Y', strtotime($book['return_date'])); ?>
@@ -388,7 +386,6 @@ foreach ($active_loans as $loan) {
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>
-                        <li><a href="<?php echo BASE_URL; ?>/public/home.php"><i class="fas fa-home"></i> Home</a></li>
                         <li><a href="<?php echo BASE_URL; ?>/public/browse.php"><i class="fas fa-book"></i> Browse Books</a></li>
                     </ul>
                 </div>
@@ -413,9 +410,9 @@ foreach ($active_loans as $loan) {
                 method: 'POST',
                 credentials: 'same-origin'
             }).then(() => {
-                window.location.href = '<?php echo BASE_URL; ?>/public/home.php';
+                window.location.href = '<?php echo BASE_URL; ?>/public/browse.php';
             }).catch(() => {
-                window.location.href = '<?php echo BASE_URL; ?>/public/home.php';
+                window.location.href = '<?php echo BASE_URL; ?>/public/browse.php';
             });
         }
     }

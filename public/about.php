@@ -169,7 +169,7 @@ $stats = DatabaseHelper::getDashboardStats();
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 ROBBOEB Libra. All rights reserved.</p>
+                <p>&copy; 2025 KHLIBRARY. All rights reserved. | Developed by <a href="https://t.me/eirsvi" target="_blank" style="color: #ff5722; text-decoration: none; font-weight: 600;">eirsvi.t.me</a> | <a href="https://github.com/robboeb/the-robboeb-library" target="_blank" style="color: #ff5722; text-decoration: none; font-weight: 600;"><i class="fab fa-github"></i> GitHub</a></p>
             </div>
         </div>
     </footer>

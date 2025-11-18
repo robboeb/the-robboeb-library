@@ -1,0 +1,494 @@
+{
+  "v": 1,
+  "name": "Library API v1 - Full URLs",
+  "folders": [
+    {
+      "v": 1,
+      "name": "Authentication",
+      "folders": [],
+      "requests": [
+        {
+          "v": "1",
+          "name": "Register User (Patron)",
+          "method": "POST",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/auth/register",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "active": true
+            }
+          ],
+          "params": [],
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"email\": \"john.doe@gmail.com\",\n  \"password\": \"SecurePass123!\",\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"phone\": \"0123456789\",\n  \"address\": \"123 Main Street, Phnom Penh, Cambodia\"\n}"
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        },
+        {
+          "v": "1",
+          "name": "Register Admin",
+          "method": "POST",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/auth/register",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "active": true
+            }
+          ],
+          "params": [],
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"email\": \"admin@library.com\",\n  \"password\": \"Admin@123\",\n  \"first_name\": \"Admin\",\n  \"last_name\": \"User\",\n  \"user_type\": \"admin\",\n  \"phone\": \"0123456789\",\n  \"address\": \"Library Office\"\n}"
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        },
+        {
+          "v": "1",
+          "name": "Login",
+          "method": "POST",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/auth/login",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "active": true
+            }
+          ],
+          "params": [],
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"email\": \"john.doe@gmail.com\",\n  \"password\": \"SecurePass123!\"\n}"
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        },
+        {
+          "v": "1",
+          "name": "Login as Admin",
+          "method": "POST",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/auth/login",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "active": true
+            }
+          ],
+          "params": [],
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"email\": \"admin@library.com\",\n  \"password\": \"Admin@123\"\n}"
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        },
+        {
+          "v": "1",
+          "name": "Get Current User",
+          "method": "GET",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/auth/me",
+          "headers": [],
+          "params": [],
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        },
+        {
+          "v": "1",
+          "name": "Logout",
+          "method": "POST",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/auth/logout",
+          "headers": [],
+          "params": [],
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        }
+      ]
+    },
+    {
+      "v": 1,
+      "name": "Books",
+      "folders": [],
+      "requests": [
+        {
+          "v": "1",
+          "name": "List All Books",
+          "method": "GET",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/books",
+          "headers": [],
+          "params": [
+            {
+              "key": "limit",
+              "value": "20",
+              "active": true
+            },
+            {
+              "key": "offset",
+              "value": "0",
+              "active": true
+            }
+          ],
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        },
+        {
+          "v": "1",
+          "name": "Get Book by ID",
+          "method": "GET",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/books/1",
+          "headers": [],
+          "params": [],
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        },
+        {
+          "v": "1",
+          "name": "Search Books",
+          "method": "GET",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/books/search",
+          "headers": [],
+          "params": [
+            {
+              "key": "q",
+              "value": "harry",
+              "active": true
+            },
+            {
+              "key": "limit",
+              "value": "10",
+              "active": true
+            }
+          ],
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        },
+        {
+          "v": "1",
+          "name": "Create Book (Admin)",
+          "method": "POST",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/books",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "active": true
+            }
+          ],
+          "params": [],
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"title\": \"The Great Gatsby\",\n  \"isbn\": \"9780743273565\",\n  \"publisher\": \"Scribner\",\n  \"publication_year\": 1925,\n  \"category_id\": 1,\n  \"total_copies\": 5,\n  \"description\": \"A classic American novel set in the Jazz Age\",\n  \"author_ids\": [1]\n}"
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        },
+        {
+          "v": "1",
+          "name": "Update Book (Admin)",
+          "method": "PUT",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/books/1",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "active": true
+            }
+          ],
+          "params": [],
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"total_copies\": 10,\n  \"description\": \"Updated description with more details\"\n}"
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        }
+      ]
+    },
+    {
+      "v": 1,
+      "name": "Loans",
+      "folders": [],
+      "requests": [
+        {
+          "v": "1",
+          "name": "Get My Loans",
+          "method": "GET",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/loans/my",
+          "headers": [],
+          "params": [],
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        },
+        {
+          "v": "1",
+          "name": "Request to Borrow Book",
+          "method": "POST",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/loans/request",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "active": true
+            }
+          ],
+          "params": [],
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"book_id\": 1\n}"
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        },
+        {
+          "v": "1",
+          "name": "Get Pending Loans (Admin)",
+          "method": "GET",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/loans/pending",
+          "headers": [],
+          "params": [],
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        },
+        {
+          "v": "1",
+          "name": "Approve Loan (Admin)",
+          "method": "PUT",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/loans/1/approve",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "active": true
+            }
+          ],
+          "params": [],
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"due_date\": \"2025-12-31\"\n}"
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        },
+        {
+          "v": "1",
+          "name": "Return Book (Admin)",
+          "method": "PUT",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/loans/1/return",
+          "headers": [],
+          "params": [],
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        }
+      ]
+    },
+    {
+      "v": 1,
+      "name": "Categories",
+      "folders": [],
+      "requests": [
+        {
+          "v": "1",
+          "name": "List Categories",
+          "method": "GET",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/categories",
+          "headers": [],
+          "params": [
+            {
+              "key": "with_count",
+              "value": "true",
+              "active": true
+            }
+          ],
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        },
+        {
+          "v": "1",
+          "name": "Create Category (Admin)",
+          "method": "POST",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/categories",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "active": true
+            }
+          ],
+          "params": [],
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"category_name\": \"Science Fiction\",\n  \"description\": \"Books about futuristic science and technology\"\n}"
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        }
+      ]
+    },
+    {
+      "v": 1,
+      "name": "Authors",
+      "folders": [],
+      "requests": [
+        {
+          "v": "1",
+          "name": "List Authors",
+          "method": "GET",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/authors",
+          "headers": [],
+          "params": [],
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        },
+        {
+          "v": "1",
+          "name": "Create Author (Admin)",
+          "method": "POST",
+          "endpoint": "http://localhost/the-robboeb-library/api/v1/authors",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "active": true
+            }
+          ],
+          "params": [],
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"first_name\": \"F. Scott\",\n  \"last_name\": \"Fitzgerald\",\n  \"biography\": \"American novelist and short story writer, known for The Great Gatsby\"\n}"
+          },
+          "auth": {
+            "authType": "none",
+            "authActive": true
+          },
+          "preRequestScript": "",
+          "testScript": ""
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "authType": "none",
+    "authActive": true
+  },
+  "headers": []
+}
